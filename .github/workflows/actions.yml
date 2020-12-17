@@ -1,5 +1,11 @@
 name: CI
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - master
 
 jobs:
 
@@ -10,6 +16,7 @@ jobs:
         image: postgres:13.1
         ports: ['5432:5432']
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
@@ -27,20 +34,44 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.7.2
-        
-      - uses: borales/actions-yarn@v2.3.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          cmd: install
+          node-version: 14.x
+
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache yarn
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Cache gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gem-
       
-      - name: Build and run tests
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
+          yarn install --frozen-lockfile
+
+      - name: Run tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
           REDIS_URL: redis://localhost:6379/0
           RAILS_ENV: test
           RAILS_MASTER_KEY : ${{ secrets.RAILS_MASTER_KEY }}
+          PG_USER: postgres
         run: |
-          sudo apt-get -yqq install libpq-dev
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-          bundle exec rails db:prepare
-          bundle exec rails test
+          bin/rails db:test:prepare
+          bin/rails test
