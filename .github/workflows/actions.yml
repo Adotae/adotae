@@ -12,7 +12,7 @@ jobs:
   Test:
     runs-on: ubuntu-latest
     services:
-      db:
+      postgres:
         image: postgres:13.1
         ports: ['5432:5432']
         env:
@@ -23,12 +23,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-      redis:
-        image: redis
-        ports: ['6379:6379']
-        options: --entrypoint redis-server
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@master
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
