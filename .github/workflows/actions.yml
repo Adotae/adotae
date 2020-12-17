@@ -4,7 +4,7 @@ on: [push, pull_request]
 jobs:
 
   Test:
-    runs-on: ubuntu_lastest
+    runs-on: ubuntu_latest
     services:
       db:
         image: postgres:12
