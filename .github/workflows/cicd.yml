@@ -70,7 +70,7 @@ jobs:
           PG_USER: postgres
         run: |
           bundle exec rails db:test:prepare
-          bundle exec rails test
+          bundle exec rspec
 
   Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
