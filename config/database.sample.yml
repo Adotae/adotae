@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: adotae_development
+
+test:
+  <<: *default
+  database: adotae_test
+
+production:
+  <<: *default
+  database: adotae_production
+  username: adotae
+  password: <%= ENV['ADOTAE_DATABASE_PASSWORD'] %>
