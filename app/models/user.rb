@@ -4,4 +4,9 @@ class User < ApplicationRecord
   has_many :blacklisted_tokens, dependent: :delete_all
 
   has_secure_password
+
+  def as_json(options = {})
+    super(options.merge({ except: [:password_digest] }))
+  end
+  
 end
