@@ -1,0 +1,29 @@
+pt-BR:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: 'As senhas não são iguais'
+  api_guard:
+    authentication:
+      signed_in: 'Logado com sucesso'
+      signed_out: 'Logout com sucesso'
+      invalid_login_credentials: 'Email ou senha errados'
+    password:
+      changed: 'Senha alterada com sucesso'
+    registration:
+      signed_up: 'Cadastro efetuado com sucesso'
+      account_deleted: 'Conta deletada com sucesso'
+    access_token:
+      refreshed: 'Token atualizado com sucesso'
+      missing: 'É necessário o access token na requisição'
+      invalid: 'Access token inválido'
+      expired: 'Access token expirado'
+    refresh_token:
+      invalid: 'Refresh token inválido'
+      missing: 'É necessário o refresh token na requisição'
+    response:
+      success: 'success'
+      error: 'error'

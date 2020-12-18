@@ -60,6 +60,8 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    api_guard (0.5.1)
+      jwt (~> 2.2)
     bcrypt (3.1.16)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
@@ -169,10 +171,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  api_guard
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   byebug
-  jwt
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
