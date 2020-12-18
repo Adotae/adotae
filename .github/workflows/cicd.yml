@@ -61,6 +61,13 @@ jobs:
           bundle install --jobs 4 --retry 3
           yarn install --frozen-lockfile
 
+      - name: Prepare DB and run migrations
+        env:
+          RAILS_ENV: test
+        run: |
+          bundle exec rails db:test:prepare
+          bundle exec rails db:migrate
+
       - name: Run tests
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
@@ -69,8 +76,6 @@ jobs:
           RAILS_MASTER_KEY : ${{ secrets.RAILS_MASTER_KEY }}
           PG_USER: postgres
         run: |
-          bundle exec rails db:test:prepare
-          bundle exec rails db:migrate
           bundle exec rspec
 
   Deploy:
