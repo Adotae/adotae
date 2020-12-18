@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 on:
   pull_request:
     branches:
@@ -71,3 +71,18 @@ jobs:
         run: |
           bundle exec rails db:test:prepare
           bundle exec rails test
+
+  Deploy:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    needs: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.7.8
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "adotae"
+          heroku_email: "fvieiramacieldesouza58@gmail.com"
