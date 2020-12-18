@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authorized, only: [:index]
 
   def index
     @users = User.all
@@ -17,7 +18,9 @@ class UsersController < ApplicationController
   def login
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
-      render json: { user: @user }
+      token = encode_token({ user_id: @user.id })
+      byebug
+      render json: { user: @user, token: token }
     else
       render json: { error: "Invalid username or password" }
     end
