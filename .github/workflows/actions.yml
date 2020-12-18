@@ -69,5 +69,5 @@ jobs:
           RAILS_MASTER_KEY : ${{ secrets.RAILS_MASTER_KEY }}
           PG_USER: postgres
         run: |
-          bin/rails db:test:prepare
-          bin/rails test
+          bundle exec rails db:test:prepare
+          bundle exec rails test
