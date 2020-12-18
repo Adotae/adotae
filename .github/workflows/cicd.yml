@@ -70,6 +70,7 @@ jobs:
           PG_USER: postgres
         run: |
           bundle exec rails db:test:prepare
+          bundle exec rails db:migrate
           bundle exec rspec
 
   Deploy:
