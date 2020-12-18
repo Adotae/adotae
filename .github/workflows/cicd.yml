@@ -61,10 +61,11 @@ jobs:
           bundle install --jobs 4 --retry 3
           yarn install --frozen-lockfile
 
-      - name: Prepare DB and run migrations
+      - name: Prepare database and run migrations
         env:
           RAILS_ENV: test
         run: |
+          mv config/database.sample.yml config/database.yml
           bundle exec rails db:test:prepare
           bundle exec rails db:migrate
 
