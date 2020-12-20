@@ -29,12 +29,21 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # RSpec testing framework for Rails
   gem 'rspec-rails', '~> 4.0.1'
+  # FactoryBot for testing
+  gem 'factory_bot_rails'
 end
 
 group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Pretty print Ruby objects
+  gem 'awesome_print'
+end
+
+group :test do
+  # Cleans test database before every test suite
+  gem 'database_cleaner-active_record'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,9 +1,27 @@
 pt-BR:
   activerecord:
     errors:
+      messages:
+        record_invalid: 'Invalid record'
       models:
         user:
           attributes:
+            name:
+              blank: 'É necessário o nome'
+              too_short: 'É necessário o nome completo'
+              too_long: 'O nome deve ter no máximo 255 caracteres'
+            email:
+              blank: 'É necessário o email'
+              taken: 'Já existe uma conta com esse email'
+              invalid: 'Email inválido'
+            phone:
+              uniqueness: 'Já existe uma conta com esse número'
+              invalid: 'O número deve estar no formato (xx) 9xxxx-xxxx'
+            password:
+              blank: 'É necessária a senha'
+              too_short: 'A senha deve ter pelo menos 8 caracteres'
+              too_long: 'A senha deve ter no máximo 100 caracteres'
+              invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
             password_confirmation:
               confirmation: 'As senhas não são iguais'
   api_guard:
