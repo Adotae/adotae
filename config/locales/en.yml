@@ -1,4 +1,6 @@
 en:
+  errors:
+    format: '%{message}'
   api_guard:
     authentication:
       signed_in: 'Signed in successfully'

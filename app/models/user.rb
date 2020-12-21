@@ -11,11 +11,12 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates_format_of :email, with: /\A(\S+)@(.+)\.(\S+)\z/
 
-  validates :phone, uniqueness: true
-  validates_format_of :phone, with: /\A\(\d{2}\)\s\d{5}-\d{4}\Z/
+  validates_uniqueness_of :phone, allow_nil: true, on: :create
+  validates_format_of :phone, with: /\A\(\d{2}\)\s\d{5}-\d{4}\Z/, allow_nil: true
 
-  validates :password, presence: true, length: { in: 8..100 }
-  validates_format_of :password, with: /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,100}\Z/
+  validates_presence_of :password, on: :create
+  validates_length_of :password, in: 8..100, allow_nil: true
+  validates_format_of :password, with: /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,100}\Z/, allow_nil: true
 
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
