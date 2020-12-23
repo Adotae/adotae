@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   validates_presence_of :password, on: :create
   validates_length_of :password, in: 8..100, allow_nil: true
-  validates_format_of :password, with: /\A(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,100}\Z/, allow_nil: true
+  validates_format_of :password, with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,100}\Z/, allow_nil: true
 
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
