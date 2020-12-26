@@ -26,6 +26,14 @@ pt-BR:
               invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
             password_confirmation:
               confirmation: 'As senhas não são iguais'
+        role:
+          attributes:
+            role:
+              blank: 'É necessário o role'
+              invalid: 'Role inválido'
+              taken: 'Role já definido para o usuário'
+            admin_user_id:
+              blank: 'É necessário o id do AdminUser'
   api_guard:
     authentication:
       signed_in: 'Logado com sucesso'
