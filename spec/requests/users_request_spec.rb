@@ -6,7 +6,7 @@ RSpec.describe "Users", type: :request do
   let!(:tokens) { jwt_and_refresh_token(user, 'user') }
   let!(:headers) {{ 'HTTP_AUTHORIZATION' => "Bearer #{ tokens[0] }" }}
 
-  describe "GET #index" do
+  describe "GET users#index" do
     before(:example) { get users_path }
     
     it "is a success when authenticated" do
@@ -29,7 +29,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "GET #show" do
+  describe "GET users#show" do
     before(:example) { get user_path(id: user.id) }
     
     it "is a success when authenticated" do
@@ -58,7 +58,30 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "POST #create" do
+  describe "GET users#me" do
+    before(:example) { get me_users_path }
+    
+    it "is a success when authenticated" do
+      get me_users_path, headers: headers
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "is a failure when unauthenticated" do
+      expect(response).to have_http_status(:unauthorized)
+    end
+
+    it "returns current logged user" do
+      get me_users_path, headers: headers
+      expect(response.body).to include(user.to_json)
+    end
+
+    it "returns error message when unauthenticated" do
+      body = JSON.parse(response.body)
+      expect(body["error"]).to include(I18n.t('api_guard.access_token.missing'))
+    end
+  end
+
+  describe "POST users#create" do
     let!(:params) {{
       name: 'Test Full Name',
       email: 'other.test@adotae.com.br',
@@ -163,7 +186,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "PUT #update" do
+  describe "PUT users#update" do
     let!(:user) { create(:user) }
     let!(:params) {{
       name: 'New Test Name',
@@ -260,7 +283,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "DELETE #destroy" do
+  describe "DELETE users#destroy" do
     let!(:user) { create(:user) }
 
     before(:example) { delete user_path(id: user.id) }

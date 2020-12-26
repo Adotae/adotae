@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     post 'account/tokens' => "api_guard/tokens#create"
   end
 
-  resources :users
+  resources :users do
+    get :me, on: :collection
+  end
 end

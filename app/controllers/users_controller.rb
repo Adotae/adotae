@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
   end
 
+  def me
+    render_success(data: @current_user)
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
