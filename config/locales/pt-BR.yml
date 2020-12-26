@@ -26,6 +26,23 @@ pt-BR:
               invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
             password_confirmation:
               confirmation: 'As senhas não são iguais'
+        admin_user:
+          attributes:
+            name:
+              blank: 'É necessário o nome completo'
+              too_short: 'É necessário o nome completo'
+              too_long: 'O nome deve ter no máximo 255 caracteres'
+            email:
+              blank: 'É necessário o email'
+              taken: 'Já existe uma conta com esse email'
+              invalid: 'Email inválido'
+            password:
+              blank: 'É necessária a senha'
+              too_short: 'A senha deve ter pelo menos 8 caracteres'
+              too_long: 'A senha deve ter no máximo 100 caracteres'
+              invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
+            password_confirmation:
+              confirmation: 'As senhas não são iguais'
         role:
           attributes:
             role:
