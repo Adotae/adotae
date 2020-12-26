@@ -10,6 +10,13 @@ Rails.application.routes.draw do
     post 'account/tokens' => "api_guard/tokens#create"
   end
 
+  api_guard_scope 'admin_users' do
+    post 'admin/login' => "api_guard/authentication#create"
+    delete 'admin/logout' => "api_guard/authentication#destroy"
+    patch 'admin/passwords' => "api_guard/passwords#update"
+    post 'admin/tokens' => "api_guard/tokens#create"
+  end
+
   resources :users do
     get :me, on: :collection
   end

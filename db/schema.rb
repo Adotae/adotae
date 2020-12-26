@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_18_170828) do
+ActiveRecord::Schema.define(version: 2020_12_26_172528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.boolean "disabled", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "blacklisted_tokens", force: :cascade do |t|
     t.string "token"
@@ -21,6 +30,8 @@ ActiveRecord::Schema.define(version: 2020_12_18_170828) do
     t.datetime "expire_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "admin_user_id"
+    t.index ["admin_user_id"], name: "index_blacklisted_tokens_on_admin_user_id"
     t.index ["user_id"], name: "index_blacklisted_tokens_on_user_id"
   end
 
@@ -29,6 +40,8 @@ ActiveRecord::Schema.define(version: 2020_12_18_170828) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "admin_user_id"
+    t.index ["admin_user_id"], name: "index_refresh_tokens_on_admin_user_id"
     t.index ["token"], name: "index_refresh_tokens_on_token", unique: true
     t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
   end
@@ -43,6 +56,8 @@ ActiveRecord::Schema.define(version: 2020_12_18_170828) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "blacklisted_tokens", "admin_users"
   add_foreign_key "blacklisted_tokens", "users"
+  add_foreign_key "refresh_tokens", "admin_users"
   add_foreign_key "refresh_tokens", "users"
 end
