@@ -49,8 +49,8 @@ pt-BR:
               blank: 'É necessário o role'
               invalid: 'Role inválido'
               taken: 'Role já definido para o usuário'
-            admin_user_id:
-              blank: 'É necessário o id do AdminUser'
+            admin_user:
+              required: 'O id no AdminUser não foi informado ou é inválido'
   api_guard:
     authentication:
       signed_in: 'Logado com sucesso'

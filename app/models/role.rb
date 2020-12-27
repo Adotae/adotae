@@ -1,12 +1,7 @@
 class Role < ApplicationRecord
-
-  # Errors
-  class RoleNotDefined < StandardError; end
-  class RoleAlreadyExists < StandardError; end
   
   # Validations
   validates_presence_of :role
-  validates_presence_of :admin_user_id, on: :create
   validate :role_is_defined?
   validate :role_already_exits?, on: :create
   

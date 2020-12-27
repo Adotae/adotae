@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# Checar se altera o estado da role inativa ou cria outra..
 RSpec.describe AdminUser, type: :model do
 
   context "validates admin name" do

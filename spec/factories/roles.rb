@@ -1,16 +1,15 @@
 FactoryBot.define do
   factory :role do
     role { "admin" }
-    admin_user { AdminUser.first.id }
-  end
+    admin_user
 
-  factory :role_with_invalid_role do
-    role { "somerandomrole" }
-    admin_user { AdminUser.first.id }
-  end
+    factory :role_with_invalid_role do
+      role { "somerandomrole" }
+    end
 
-  factory :role_with_invalid_admin_id do
-    role { "admin" }
-    admin_user { 9999 }
+    factory :role_with_invalid_admin do
+      role { "manager" }
+      admin_user { nil }
+    end
   end
 end
