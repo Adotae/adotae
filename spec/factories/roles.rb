@@ -3,6 +3,10 @@ FactoryBot.define do
     role { "admin" }
     admin_user
 
+    factory :role_admin do
+      role { "admin" }
+    end
+
     factory :role_with_invalid_role do
       role { "somerandomrole" }
     end

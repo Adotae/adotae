@@ -1,5 +1,9 @@
 class UserPolicy < ApplicationPolicy
 
+  def me?
+    !user.nil?
+  end
+
   def index?
     user.instance_of?(AdminUser) && user.admin?
   end

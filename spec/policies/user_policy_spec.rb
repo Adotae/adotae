@@ -1,27 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe UserPolicy, type: :policy do
-  let(:user) { User.new }
+  subject { UserPolicy.new(admin, user) }
 
-  subject { described_class }
+  let(:user) { create(:user) }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "unauthenticated" do
+    let(:admin) { nil }
+
+    it { should_not permit(:me) }
+    it { should_not permit(:index) }
+    it { should_not permit(:show) }
+    it { should_not permit(:create) }
+    it { should_not permit(:update) }
+    it { should_not permit(:destroy) }
   end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  context "for a user" do
+    let(:admin) { :user }
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+    it { should     permit(:me) }
 
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it { should_not permit(:index) }
+    it { should_not permit(:show) }
+    it { should_not permit(:create) }
+    it { should_not permit(:update) }
+    it { should_not permit(:destroy) }
   end
+  
+  context "for an admin" do
+    let(:admin) {
+      admin = create(:admin_user)
+      admin.add_role('admin')
+      admin
+    }
 
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it { should permit(:me) }
+    it { should permit(:index) }
+    it { should permit(:show) }
+    it { should permit(:create) }
+    it { should permit(:update) }
+    it { should permit(:destroy) }
   end
 end
