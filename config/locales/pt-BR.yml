@@ -77,6 +77,8 @@ pt-BR:
       success: 'success'
       error: 'error'
     errors:
+      authorization:
+        unauthorized: 'Não é possivel acessar o recurso solicitado'
       user:
         not_found: 'Usuário não encontrado'
         on_destroy: 'Erro ao excluir o usuário'

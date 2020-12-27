@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_26_231503) do
+ActiveRecord::Schema.define(version: 2020_12_27_023335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,21 +27,21 @@ ActiveRecord::Schema.define(version: 2020_12_26_231503) do
 
   create_table "blacklisted_tokens", force: :cascade do |t|
     t.string "token"
-    t.bigint "user_id", null: false
     t.datetime "expire_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "admin_user_id"
+    t.bigint "user_id"
     t.index ["admin_user_id"], name: "index_blacklisted_tokens_on_admin_user_id"
     t.index ["user_id"], name: "index_blacklisted_tokens_on_user_id"
   end
 
   create_table "refresh_tokens", force: :cascade do |t|
     t.string "token"
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "admin_user_id"
+    t.bigint "user_id"
     t.index ["admin_user_id"], name: "index_refresh_tokens_on_admin_user_id"
     t.index ["token"], name: "index_refresh_tokens_on_token", unique: true
     t.index ["user_id"], name: "index_refresh_tokens_on_user_id"

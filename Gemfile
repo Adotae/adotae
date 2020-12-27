@@ -18,6 +18,9 @@ gem 'bcrypt', '~> 3.1.7'
 # API token authentication (access and refresh tokens)
 gem 'api_guard'
 
+# API authorization
+gem 'pundit'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
