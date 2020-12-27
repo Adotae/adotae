@@ -1,7 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Maintainability](https://api.codeclimate.com/v1/badges/c48ba764c75d2e560793/maintainability)](https://codeclimate.com/repos/5fe8f433149a3317a3000020/maintainability)
 
 Things you may want to cover:
 
