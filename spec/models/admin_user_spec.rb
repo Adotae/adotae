@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-# Checar se altera o estado da role inativa ou cria outra..
 RSpec.describe AdminUser, type: :model do
 
   context "validates admin name" do
@@ -187,6 +186,42 @@ RSpec.describe AdminUser, type: :model do
       admin.valid?
       expect(admin.errors[:password]).to include(
         I18n.t('activerecord.errors.models.admin_user.attributes.password.invalid'))
+    end
+  end
+
+  context "validates admin roles" do
+    let!(:admin) { create(:admin_user) }
+
+    it "add role for user" do
+      admin.add_role('admin')
+      role = Role.where(admin_user_id: admin.id, role: 'admin').last
+      expect(role).not_to be_nil
+      expect(role.active).to be_truthy
+    end
+
+    it "remove role for user" do
+      admin.add_role('admin')
+      admin.remove_role('admin')
+      role = Role.where(admin_user_id: admin.id, role: 'admin').last
+      expect(role).not_to be_nil
+      expect(role.active).to be_falsey
+    end
+
+    it "active role if role is already defined for user and is inactive" do
+      role = admin.add_role('admin')
+      admin.remove_role('admin')
+      admin.add_role('admin')
+      new_role = Role.where(admin_user_id: admin.id, role: 'admin').last
+      expect(role.id).to be_eql(new_role.id)
+      expect(role.reload.active).to be_truthy
+    end
+
+    it "inactive role if role is already defined for user and is active" do
+      role = admin.add_role('admin')
+      admin.remove_role('admin')
+      new_role = Role.where(admin_user_id: admin.id, role: 'admin').last
+      expect(role.id).to be_eql(new_role.id)
+      expect(role.reload.active).to be_falsey
     end
   end
 
