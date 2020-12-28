@@ -8,8 +8,8 @@ class User < ApplicationRecord
   # Validations
   validates :name, presence: true, length: { in: 10..255 }
 
-  validates :email, presence: true, uniqueness: true
-  validates_format_of :email, with: /\A(\S+)@(.+)\.(\S+)\z/
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
 
   validates_uniqueness_of :phone, allow_nil: true, on: :create
   validates_format_of :phone, with: /\A\(\d{2}\)\s\d{5}-\d{4}\Z/, allow_nil: true

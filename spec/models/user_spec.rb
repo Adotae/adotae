@@ -84,6 +84,14 @@ RSpec.describe User, type: :model do
         I18n.t('activerecord.errors.models.user.attributes.email.taken'))
     end
 
+    it "returns error message when email is already in use: considering case" do
+      user.save!
+      another_user = User.new email: user.email.upcase
+      another_user.valid?
+      expect(another_user.errors[:email]).to include(
+        I18n.t('activerecord.errors.models.user.attributes.email.taken'))
+    end
+
     it "returns error message when email format is invalid: with spaces" do
       user.email = "a test @adotae.com.br"
       user.valid?
