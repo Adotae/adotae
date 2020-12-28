@@ -21,6 +21,9 @@ gem 'api_guard', '~> 0.5.2', github: 'Adotae/api_guard', branch: 'feat-multiple-
 # API authorization
 gem 'pundit'
 
+# API versioning
+gem 'versionist'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

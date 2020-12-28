@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  
-  # Setup api guard routes
+
+  # Setup api guard routes for user
   api_guard_scope 'users' do
     post 'account/login' => "api_guard/authentication#create"
     delete 'account/logout' => "api_guard/authentication#destroy"
@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     post 'account/tokens' => "api_guard/tokens#create"
   end
 
+  # Setup api guard routes for admin
   api_guard_scope 'admin_users' do
     post 'admin/login' => "api_guard/authentication#create"
     delete 'admin/logout' => "api_guard/authentication#destroy"
@@ -17,7 +18,17 @@ Rails.application.routes.draw do
     post 'admin/tokens' => "api_guard/tokens#create"
   end
 
-  resources :users do
-    get :me, on: :collection
+  api_version(
+    module: 'V1',
+    header: {
+      name: 'Accept',
+      value: 'application/vnd.adotae.v1+json'
+    },
+    default: true
+  ) do
+
+    resources :users do
+      get :me, on: :collection
+    end
   end
 end

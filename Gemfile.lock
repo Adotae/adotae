@@ -201,11 +201,16 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2020.4)
       tzinfo (>= 1.0.0)
+    versionist (2.0.1)
+      activesupport (>= 3)
+      railties (>= 3)
+      yard (~> 0.9.20)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-driver (0.7.3-java)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    yard (0.9.26)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -232,6 +237,7 @@ DEPENDENCIES
   rspec-rails (~> 4.0.1)
   spring
   tzinfo-data
+  versionist
 
 RUBY VERSION
    ruby 2.7.2p137
