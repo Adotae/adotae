@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authorize_user
 
   def index
     @users = User.all
@@ -52,6 +53,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.permit(:name, :email, :phone, :password)
+  end
+
+  def authorize_user
+    authorize User
   end
 
 end

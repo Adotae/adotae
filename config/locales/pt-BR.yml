@@ -26,6 +26,31 @@ pt-BR:
               invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
             password_confirmation:
               confirmation: 'As senhas não são iguais'
+        admin_user:
+          attributes:
+            name:
+              blank: 'É necessário o nome completo'
+              too_short: 'É necessário o nome completo'
+              too_long: 'O nome deve ter no máximo 255 caracteres'
+            email:
+              blank: 'É necessário o email'
+              taken: 'Já existe uma conta com esse email'
+              invalid: 'Email inválido'
+            password:
+              blank: 'É necessária a senha'
+              too_short: 'A senha deve ter pelo menos 8 caracteres'
+              too_long: 'A senha deve ter no máximo 100 caracteres'
+              invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
+            password_confirmation:
+              confirmation: 'As senhas não são iguais'
+        role:
+          attributes:
+            role:
+              blank: 'É necessário o role'
+              invalid: 'Role inválido'
+              taken: 'Role já definido para o usuário'
+            admin_user:
+              required: 'O id no AdminUser não foi informado ou é inválido'
   api_guard:
     authentication:
       signed_in: 'Logado com sucesso'
@@ -52,6 +77,8 @@ pt-BR:
       success: 'success'
       error: 'error'
     errors:
+      authorization:
+        unauthorized: 'Não é possivel acessar o recurso solicitado'
       user:
         not_found: 'Usuário não encontrado'
         on_destroy: 'Erro ao excluir o usuário'

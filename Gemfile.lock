@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/Adotae/api_guard.git
+  revision: 51f9d3e05b79c246777279d87823e902ac1f3f13
+  branch: feat-multiple-resources
+  specs:
+    api_guard (0.5.2)
+      jwt (~> 2.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -60,8 +68,6 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    api_guard (0.5.1)
-      jwt (~> 2.2)
     awesome_print (1.8.0)
     bcrypt (3.1.16)
     bcrypt (3.1.16-java)
@@ -128,6 +134,8 @@ GEM
       nio4r (~> 2.0)
     puma (5.1.1-java)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     rack (2.2.3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
@@ -208,7 +216,7 @@ PLATFORMS
   x86-mswin32
 
 DEPENDENCIES
-  api_guard
+  api_guard (~> 0.5.2)!
   awesome_print
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
@@ -218,6 +226,7 @@ DEPENDENCIES
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
+  pundit
   rack-cors
   rails (~> 6.1.0)
   rspec-rails (~> 4.0.1)
