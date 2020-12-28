@@ -16,7 +16,7 @@ gem 'puma', '~> 5.0'
 gem 'bcrypt', '~> 3.1.7'
 
 # API token authentication (access and refresh tokens)
-gem 'api_guard'
+gem 'api_guard', '~> 0.5.2', github: 'Adotae/api_guard', branch: 'feat-multiple-resources'
 
 # API authorization
 gem 'pundit'

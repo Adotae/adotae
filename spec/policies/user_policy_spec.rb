@@ -17,7 +17,7 @@ RSpec.describe UserPolicy, type: :policy do
   end
 
   context "for a user" do
-    let(:admin) { :user }
+    let(:admin) { user }
 
     it { should     permit(:me) }
 
@@ -35,11 +35,12 @@ RSpec.describe UserPolicy, type: :policy do
       admin
     }
 
-    it { should permit(:me) }
-    it { should permit(:index) }
-    it { should permit(:show) }
-    it { should permit(:create) }
-    it { should permit(:update) }
-    it { should permit(:destroy) }
+    it { should     permit(:index) }
+    it { should     permit(:show) }
+    it { should     permit(:create) }
+    it { should     permit(:update) }
+    it { should     permit(:destroy) }
+
+    it { should_not permit(:me) }
   end
 end

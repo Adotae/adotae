@@ -1,7 +1,7 @@
 class UserPolicy < ApplicationPolicy
 
   def me?
-    !user.nil?
+    user.instance_of?(User)
   end
 
   def index?
