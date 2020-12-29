@@ -20,6 +20,7 @@ jobs:
       
       - name: Install Rubocop
         run: gem install rubocop
+        run: gem install rubocop-rails
       
       - name: Check code
         run: rubocop
