@@ -97,6 +97,13 @@ jobs:
         run: |
           bundle exec rspec
 
+      - name: Upload coverage results as artifact
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
+
   Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     needs: Test

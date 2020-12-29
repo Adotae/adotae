@@ -32,3 +32,6 @@
 
 # Ignore database config file
 /config/database.yml
+
+# Ignore generated test coverage report
+/coverage

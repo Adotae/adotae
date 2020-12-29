@@ -39,6 +39,8 @@ group :development, :test do
   gem "rspec-rails", "~> 4.0.1"
   # FactoryBot for testing
   gem "factory_bot_rails"
+  # Generates test coverage report
+  gem "simplecov"
 end
 
 group :development do
