@@ -30,5 +30,9 @@ Rails.application.routes.draw do
     resources :users do
       get :me, on: :collection
     end
+
+    resources :admin_users, path: 'admins' do
+      get :me, on: :collection
+    end
   end
 end

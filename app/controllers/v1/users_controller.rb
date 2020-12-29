@@ -42,8 +42,7 @@ module V1
 
     def destroy
       @user = User.find(params[:id])
-      @user.destroy
-      if @user.destroyed?
+      if @user.destroy
         render_success(data: @user)
       else
         render_error(:bad_request, message: I18n.t("adotae.errors.user.on_destroy"))

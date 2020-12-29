@@ -91,6 +91,8 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    faker (2.15.1)
+      i18n (>= 1.6, < 2)
     ffi (1.13.1)
     ffi (1.13.1-java)
     ffi (1.13.1-x64-mingw32)
@@ -100,6 +102,7 @@ GEM
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     json (2.3.1)
+    json (2.3.1-java)
     jwt (2.2.2)
     listen (3.3.3)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -235,6 +238,7 @@ DEPENDENCIES
   byebug
   database_cleaner-active_record
   factory_bot_rails
+  faker
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
