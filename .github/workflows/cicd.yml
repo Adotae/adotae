@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@master
 
       - uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: 2.7.2
+        with:
+          ruby-version: 2.7.2
       
       - name: Install Rubocop
         run: gem install rubocop
