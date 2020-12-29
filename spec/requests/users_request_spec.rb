@@ -1,21 +1,22 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "Users", type: :request do
-
   let!(:user) { create(:user) }
   let!(:admin) {
     admin = create(:admin_user)
-    admin.add_role('admin')
+    admin.add_role("admin")
     admin
   }
-  let!(:user_tokens) { jwt_and_refresh_token(user, 'user') }
-  let!(:admin_tokens) { jwt_and_refresh_token(admin, 'admin_user') }
-  let!(:user_headers) {{ 'HTTP_AUTHORIZATION' => "Bearer #{ user_tokens[0] }" }}
-  let!(:admin_headers) {{ 'HTTP_AUTHORIZATION' => "Bearer #{ admin_tokens[0] }" }}
+  let!(:user_tokens) { jwt_and_refresh_token(user, "user") }
+  let!(:admin_tokens) { jwt_and_refresh_token(admin, "admin_user") }
+  let!(:user_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{user_tokens[0]}" }}
+  let!(:admin_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{admin_tokens[0]}" }}
 
   describe "GET users#index" do
-    before(:example) { get users_path }
-    
+    before { get users_path }
+
     it "is a success when authenticated and authorized" do
       get users_path, headers: admin_headers
       expect(response).to have_http_status(:ok)
@@ -37,19 +38,19 @@ RSpec.describe "Users", type: :request do
 
     it "returns error message when unauthenticated" do
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('api_guard.access_token.missing'))
+      expect(body["error"]).to include(I18n.t("api_guard.access_token.missing"))
     end
 
     it "returns error message when unauthorized" do
       get users_path, headers: user_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.authorization.unauthorized'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.authorization.unauthorized"))
     end
   end
 
   describe "GET users#show" do
-    before(:example) { get user_path(id: user.id) }
-    
+    before { get user_path(id: user.id) }
+
     it "is a success when authenticated and authorized" do
       get user_path(id: user.id), headers: admin_headers
       expect(response).to have_http_status(:ok)
@@ -72,24 +73,24 @@ RSpec.describe "Users", type: :request do
     it "returns error message when not found" do
       get user_path(id: 999), headers: admin_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.user.not_found'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.user.not_found"))
     end
 
     it "returns error message when unauthenticated" do
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('api_guard.access_token.missing'))
+      expect(body["error"]).to include(I18n.t("api_guard.access_token.missing"))
     end
 
     it "returns error message when unauthorized" do
       get user_path(id: 999), headers: user_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.authorization.unauthorized'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.authorization.unauthorized"))
     end
   end
 
   describe "GET users#me" do
-    before(:example) { get me_users_path }
-    
+    before { get me_users_path }
+
     it "is a success when authenticated as user" do
       get me_users_path, headers: user_headers
       expect(response).to have_http_status(:ok)
@@ -115,26 +116,26 @@ RSpec.describe "Users", type: :request do
 
     it "returns error message when unauthenticated" do
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('api_guard.access_token.missing'))
+      expect(body["error"]).to include(I18n.t("api_guard.access_token.missing"))
     end
 
     it "returns error message when unauthorized" do
       get me_users_path, headers: admin_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.authorization.unauthorized'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.authorization.unauthorized"))
     end
   end
 
   describe "POST users#create" do
     let!(:params) {{
-      name: 'Test Full Name',
-      email: 'other.test@adotae.com.br',
-      phone: '(11) 93333-2222',
-      password: 'Test@0304'
+      name: "Test Full Name",
+      email: "other.test@adotae.com.br",
+      phone: "(11) 93333-2222",
+      password: "Test@0304"
     }}
 
-    before(:example) { post users_path, params: params }
-    
+    before { post users_path, params: params }
+
     it "is a success when authenticated and valid params" do
       post users_path, params: params, headers: admin_headers
       expect(response).to have_http_status(:ok)
@@ -164,7 +165,7 @@ RSpec.describe "Users", type: :request do
       post users_path, params: params.except(:name), headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.name.blank'))
+        I18n.t("activerecord.errors.models.user.attributes.name.blank"))
     end
 
     it "returns error message when name is not full name" do
@@ -172,14 +173,14 @@ RSpec.describe "Users", type: :request do
       post users_path, params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.name.too_short'))
+        I18n.t("activerecord.errors.models.user.attributes.name.too_short"))
     end
 
     it "returns error message when email is not present" do
       post users_path, params: params.except(:email), headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.email.blank'))
+        I18n.t("activerecord.errors.models.user.attributes.email.blank"))
     end
 
     it "returns error message when email has invalid format" do
@@ -187,7 +188,7 @@ RSpec.describe "Users", type: :request do
       post users_path, params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
+        I18n.t("activerecord.errors.models.user.attributes.email.invalid"))
     end
 
     it "returns error message when phone has invalid format" do
@@ -195,14 +196,14 @@ RSpec.describe "Users", type: :request do
       post users_path, params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.phone.invalid'))
+        I18n.t("activerecord.errors.models.user.attributes.phone.invalid"))
     end
 
     it "returns error message when password is not present" do
       post users_path, params: params.except(:password), headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.password.blank'))
+        I18n.t("activerecord.errors.models.user.attributes.password.blank"))
     end
 
     it "returns error message when password has invalid format" do
@@ -210,7 +211,7 @@ RSpec.describe "Users", type: :request do
       post users_path, params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.password.invalid'))
+        I18n.t("activerecord.errors.models.user.attributes.password.invalid"))
     end
 
     it "returns error message when password is too short" do
@@ -218,7 +219,7 @@ RSpec.describe "Users", type: :request do
       post users_path, params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.password.too_short'))
+        I18n.t("activerecord.errors.models.user.attributes.password.too_short"))
     end
 
     it "returns error message when password is too long" do
@@ -226,30 +227,30 @@ RSpec.describe "Users", type: :request do
       post users_path, params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.password.too_long'))
+        I18n.t("activerecord.errors.models.user.attributes.password.too_long"))
     end
 
     it "returns error message when unauthenticated" do
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('api_guard.access_token.missing'))
+      expect(body["error"]).to include(I18n.t("api_guard.access_token.missing"))
     end
 
     it "returns error message when unauthorized" do
       post users_path, params: params, headers: user_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.authorization.unauthorized'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.authorization.unauthorized"))
     end
   end
 
   describe "PUT users#update" do
     let!(:user) { create(:user) }
     let!(:params) {{
-      name: 'New Test Name',
-      phone: '(11) 93333-2222'
+      name: "New Test Name",
+      phone: "(11) 93333-2222"
     }}
 
-    before(:example) { put user_path(id: user.id), params: params }
-    
+    before { put user_path(id: user.id), params: params }
+
     it "is a success when authenticated and valid params" do
       put user_path(id: user.id), params: params, headers: admin_headers
       user.reload
@@ -286,7 +287,7 @@ RSpec.describe "Users", type: :request do
     it "returns error message when not found" do
       put user_path(id: 999), params: params, headers: admin_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.user.not_found'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.user.not_found"))
     end
 
     it "returns error message when name is not full name" do
@@ -294,7 +295,7 @@ RSpec.describe "Users", type: :request do
       put user_path(id: user.id), params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.name.too_short'))
+        I18n.t("activerecord.errors.models.user.attributes.name.too_short"))
     end
 
     it "returns error message when email has invalid format" do
@@ -302,7 +303,7 @@ RSpec.describe "Users", type: :request do
       put user_path(id: user.id), params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.email.invalid'))
+        I18n.t("activerecord.errors.models.user.attributes.email.invalid"))
     end
 
     it "returns error message when phone has invalid format" do
@@ -310,7 +311,7 @@ RSpec.describe "Users", type: :request do
       put user_path(id: user.id), params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.phone.invalid'))
+        I18n.t("activerecord.errors.models.user.attributes.phone.invalid"))
     end
 
     it "returns error message when password has invalid format" do
@@ -318,7 +319,7 @@ RSpec.describe "Users", type: :request do
       put user_path(id: user.id), params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.password.invalid'))
+        I18n.t("activerecord.errors.models.user.attributes.password.invalid"))
     end
 
     it "returns error message when password is too short" do
@@ -326,7 +327,7 @@ RSpec.describe "Users", type: :request do
       put user_path(id: user.id), params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.password.too_short'))
+        I18n.t("activerecord.errors.models.user.attributes.password.too_short"))
     end
 
     it "returns error message when password is too long" do
@@ -334,25 +335,25 @@ RSpec.describe "Users", type: :request do
       put user_path(id: user.id), params: params, headers: admin_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(
-        I18n.t('activerecord.errors.models.user.attributes.password.too_long'))
+        I18n.t("activerecord.errors.models.user.attributes.password.too_long"))
     end
 
     it "returns error message when unauthenticated" do
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('api_guard.access_token.missing'))
+      expect(body["error"]).to include(I18n.t("api_guard.access_token.missing"))
     end
 
     it "returns error message when unauthorized" do
       put user_path(id: user.id), params: params, headers: user_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.authorization.unauthorized'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.authorization.unauthorized"))
     end
   end
 
   describe "DELETE users#destroy" do
     let!(:user) { create(:user) }
 
-    before(:example) { delete user_path(id: user.id) }
+    before { delete user_path(id: user.id) }
 
     it "is a success when authenticated" do
       delete user_path(id: user.id), headers: admin_headers
@@ -377,19 +378,18 @@ RSpec.describe "Users", type: :request do
     it "returns error message when not found" do
       delete user_path(id: 999), headers: admin_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.user.not_found'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.user.not_found"))
     end
 
     it "returns error message when unauthenticated" do
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('api_guard.access_token.missing'))
+      expect(body["error"]).to include(I18n.t("api_guard.access_token.missing"))
     end
 
     it "returns error message when unauthorized" do
       delete user_path(id: user.id), headers: user_headers
       body = JSON.parse(response.body)
-      expect(body["error"]).to include(I18n.t('adotae.errors.authorization.unauthorized'))
+      expect(body["error"]).to include(I18n.t("adotae.errors.authorization.unauthorized"))
     end
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module V1
   class UsersController < ApplicationController
     before_action :authorize_user
@@ -59,6 +61,5 @@ module V1
     def authorize_user
       authorize User
     end
-
   end
 end
