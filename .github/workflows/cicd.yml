@@ -19,8 +19,9 @@ jobs:
           ruby-version: 2.7.2
       
       - name: Install Rubocop
-        run: gem install rubocop
-        run: gem install rubocop-rails
+        run: |
+          gem install rubocop
+          gem install rubocop-rails
       
       - name: Check code
         run: rubocop
