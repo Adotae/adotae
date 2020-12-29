@@ -104,6 +104,11 @@ jobs:
           name: coverage-report
           path: coverage
 
+      - name: Upload coverage results to CodeClimate
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
   Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     needs: Test
