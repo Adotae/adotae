@@ -31,11 +31,7 @@ RSpec.describe UserPolicy, type: :policy do
   end
 
   context "for an admin" do
-    let(:admin) {
-      admin = create(:admin_user)
-      admin.add_role("admin")
-      admin
-    }
+    let(:admin) { create(:admin) }
 
     it { should     permit(:index) }
     it { should     permit(:show) }
