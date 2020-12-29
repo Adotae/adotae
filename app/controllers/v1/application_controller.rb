@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module V1
   class ApplicationController < ActionController::API
     include Pundit
@@ -12,7 +14,7 @@ module V1
     end
 
     def user_not_authorized
-      render_error(:forbidden, message: I18n.t('adotae.errors.authorization.unauthorized'))
+      render_error(:forbidden, message: I18n.t("adotae.errors.authorization.unauthorized"))
     end
   end
 end

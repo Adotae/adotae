@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe UserPolicy, type: :policy do
   subject { UserPolicy.new(admin, user) }
@@ -27,11 +29,11 @@ RSpec.describe UserPolicy, type: :policy do
     it { should_not permit(:update) }
     it { should_not permit(:destroy) }
   end
-  
+
   context "for an admin" do
     let(:admin) {
       admin = create(:admin_user)
-      admin.add_role('admin')
+      admin.add_role("admin")
       admin
     }
 

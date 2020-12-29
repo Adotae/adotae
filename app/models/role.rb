@@ -1,27 +1,25 @@
+# frozen_string_literal: true
+
 class Role < ApplicationRecord
-  
   # Validations
-  validates_presence_of :role
+  validates :role, presence: true
   validate :role_is_defined?
   validate :role_already_exits?, on: :create
-  
+
   # Relations
   belongs_to :admin_user
-  
-  ROLES = ['admin', 'moderator', 'manager']
+
+  ROLES = %w[admin moderator manager].freeze
 
   private
 
   def role_is_defined?
-    if ROLES.exclude?(self.role)
-      errors.add(:role, I18n.t("activerecord.errors.models.role.attributes.role.invalid"))
-    end
+    return unless ROLES.exclude?(role)
+    errors.add(:role, I18n.t("activerecord.errors.models.role.attributes.role.invalid"))
   end
 
   def role_already_exits?
-    if self.admin_user && self.admin_user.has_permission?(self.role)
-      errors.add(:role, I18n.t("activerecord.errors.models.role.attributes.role.taken"))
-    end
+    return unless admin_user&.permission?(role)
+    errors.add(:role, I18n.t("activerecord.errors.models.role.attributes.role.taken"))
   end
-  
 end
