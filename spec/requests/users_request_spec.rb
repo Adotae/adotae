@@ -78,7 +78,7 @@ RSpec.describe "Users", type: :request do
     end
 
     it "returns error message when unauthorized" do
-      get user_path(id: 999), headers: user_headers
+      get user_path(id: user.id), headers: user_headers
       body = JSON.parse(response.body)
       expect(body["error"]).to include(I18n.t("adotae.errors.authorization.unauthorized"))
     end
@@ -92,7 +92,7 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "is a success when authenticated as admin" do
+    it "is a failure when authenticated as admin" do
       get me_users_path, headers: admin_headers
       expect(response).to have_http_status(:forbidden)
     end
@@ -369,6 +369,18 @@ RSpec.describe "Users", type: :request do
     it "returns deleted user" do
       delete user_path(id: user.id), headers: admin_headers
       expect(response.body).to include(user.to_json)
+    end
+
+    it "returns error message when error on destroying" do
+      allow(User).to receive(:find).with(user.id.to_s).and_return(user)
+      allow(user).to receive(:destroy).and_return(false)
+
+      delete user_path(id: user.id), headers: admin_headers
+      
+      body = JSON.parse(response.body)
+      expect(User).to have_received(:find)
+      expect(user).to have_received(:destroy)
+      expect(body["error"]).to include(I18n.t("adotae.errors.user.on_destroy"))
     end
 
     it "returns error message when not found" do

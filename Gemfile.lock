@@ -92,6 +92,8 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    faker (2.15.1)
+      i18n (>= 1.6, < 2)
     ffi (1.13.1)
     ffi (1.13.1-java)
     ffi (1.13.1-x64-mingw32)
@@ -238,6 +240,7 @@ DEPENDENCIES
   cpf_cnpj
   database_cleaner-active_record
   factory_bot_rails
+  faker
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)

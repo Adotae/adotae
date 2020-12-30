@@ -93,3 +93,6 @@ pt-BR:
       user:
         not_found: 'Usuário não encontrado'
         on_destroy: 'Erro ao excluir o usuário'
+      admin_user:
+        not_found: 'AdminUser não encontrado'
+        on_destroy: 'Erro ao excluir o AdminUser'
