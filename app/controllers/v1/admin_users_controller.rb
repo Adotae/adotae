@@ -54,7 +54,7 @@ module V1
     private
 
     def admin_user_params
-      params.permit(:name, :email, :password)
+      params.permit(:name, :email, :password, :cpf)
     end
 
     def authorize_user

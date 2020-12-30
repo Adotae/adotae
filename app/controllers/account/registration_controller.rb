@@ -5,7 +5,15 @@ module Account
     private
 
     def sign_up_params
-      params.permit(:name, :email, :phone, :password, :password_confirmation)
+      params.permit(
+        :name,
+        :email,
+        :phone,
+        :password,
+        :password_confirmation,
+        :cpf,
+        :cnpj
+      )
     end
   end
 end

@@ -26,6 +26,13 @@ pt-BR:
               invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
             password_confirmation:
               confirmation: 'As senhas não são iguais'
+            cpf:
+              blank: 'É necessário o CPF ou CNPJ'
+              taken: 'Já existe uma conta com esse CPF'
+              invalid: 'CPF inválido'
+            cnpj:
+              blank: 'É necessário o CPF ou CNPJ'
+              invalid: 'CNPJ inválido'
         admin_user:
           attributes:
             name:
@@ -43,6 +50,10 @@ pt-BR:
               invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
             password_confirmation:
               confirmation: 'As senhas não são iguais'
+            cpf:
+              blank: 'É necessário o CPF'
+              taken: 'Já existe uma conta com esse CPF'
+              invalid: 'CPF inválido'
         role:
           attributes:
             role:

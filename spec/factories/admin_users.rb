@@ -5,6 +5,7 @@ FactoryBot.define do
     name { Faker::Name.name_with_middle }
     email { Faker::Internet.unique.email }
     password { "AdotaeTest@0101" }
+    cpf { CPF.generate }
     
     factory :manager do
       after(:create) do |manager, evaluator|

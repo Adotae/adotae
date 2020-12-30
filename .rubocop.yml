@@ -13,6 +13,9 @@ AllCops:
 Layout/LineLength:
   Max: 118
 
+Layout/SpaceInLambdaLiteral:
+  EnforcedStyle: require_space
+
 Layout/SpaceInsideStringInterpolation:
   EnforcedStyle: no_space
 

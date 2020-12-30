@@ -127,7 +127,8 @@ RSpec.describe "Users", type: :request do
       name: "Test Full Name",
       email: "other.test@adotae.com.br",
       phone: "(11) 93333-2222",
-      password: "Test@0304"
+      password: "Test@0304",
+      cpf: CPF.generate
     }}
 
     before { post users_path, params: params }
