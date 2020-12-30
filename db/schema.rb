@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_12_29_205332) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "cpf"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["cpf"], name: "index_admin_users_on_cpf", unique: true
   end
 
   create_table "blacklisted_tokens", force: :cascade do |t|
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_12_29_205332) do
     t.string "cnpj"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["phone"], name: "index_users_on_phone", unique: true
+    t.index ["cpf"], name: "index_users_on_cpf", unique: true
   end
 
   add_foreign_key "blacklisted_tokens", "admin_users"

@@ -31,7 +31,11 @@ class User < ApplicationRecord
 
   validates :cnpj, presence: { unless: :cpf? }
   validate :cnpj_is_valid?
- 
+
+  def juridical_person?
+    cnpj.present?
+  end
+
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
   end
@@ -39,24 +43,14 @@ class User < ApplicationRecord
   private
 
   def cpf_is_valid?
-    return unless cpf.present?
-
-    if cpf.match(/\A\d+\Z/)
-      return if CPF.valid?(cpf)
-      errors.add(:cpf, I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
-    else
-      errors.add(:cpf, I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
-    end
+    return if cpf.blank?
+    return if cpf.match(/\A\d+\Z/) && CPF.valid?(cpf)
+    errors.add(:cpf, I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
   end
 
   def cnpj_is_valid?
-    return unless cnpj.present?
-    
-    if cnpj.match(/\A\d+\Z/)
-      return if CNPJ.valid?(cnpj)
-      errors.add(:cnpj, I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
-    else
-      errors.add(:cnpj, I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
-    end
+    return if cnpj.blank?
+    return if cnpj.match(/\A\d+\Z/) && CNPJ.valid?(cnpj)
+    errors.add(:cnpj, I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
   end
 end

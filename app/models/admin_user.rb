@@ -56,11 +56,8 @@ class AdminUser < ApplicationRecord
   private
 
   def cpf_is_valid?
-    if cpf.match(/\A\d+\Z/)
-      return unless CPF.valid?(cpf)
-      errors.add(:cpf, I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
-    else
-      errors.add(:cpf, I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
-    end
+    return if cpf.blank?
+    return if cpf.match(/\A\d+\Z/) && CPF.valid?(cpf)
+    errors.add(:cpf, I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
   end
 end

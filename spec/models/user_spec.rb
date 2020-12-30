@@ -219,4 +219,105 @@ RSpec.describe User, type: :model do
         I18n.t("activerecord.errors.models.user.attributes.password.invalid"))
     end
   end
+
+  context "validates user cpf" do
+    let!(:user) { create(:user) }
+
+    it "is valid" do
+      expect(user).to be_valid
+    end
+
+    it "is not valid when nil" do
+      user.cpf = nil
+      expect(user).to_not be_valid
+    end
+
+    it "is not valid when invalid format" do
+      user.cpf = "000.000.000-00"
+      expect(user).to_not be_valid
+    end
+
+    it "returns error message when cpf is nil" do
+      user.cpf = nil
+      user.valid?
+      expect(user.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cpf.blank"))
+    end
+
+    it "returns error message when cpf is empty" do
+      user.cpf = ""
+      user.valid?
+      expect(user.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cpf.blank"))
+    end
+
+    it "returns error message when cpf is already in use" do
+      user.save!
+      another_user = User.new cpf: user.cpf
+      another_user.valid?
+      expect(another_user.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cpf.taken"))
+    end
+
+    it "returns error message when cpf format is invalid" do
+      user.cpf = "000.000.000-00"
+      user.valid?
+      expect(user.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
+    end
+
+    it "returns error message when cpf is invalid" do
+      user.cpf = "00000000000"
+      user.valid?
+      expect(user.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
+    end
+  end
+
+  context "validates user cnpj" do
+    let!(:user) { create(:user_with_cnpj) }
+
+    it "is valid" do
+      expect(user).to be_valid
+      expect(user.juridical_person?).to be_truthy
+    end
+
+    it "is not valid when nil" do
+      user.cnpj = nil
+      expect(user).to_not be_valid
+    end
+
+    it "is not valid when invalid format" do
+      user.cnpj = "00.000.000/0000-00"
+      expect(user).to_not be_valid
+    end
+
+    it "returns error message when cnpj is nil" do
+      user.cnpj = nil
+      user.valid?
+      expect(user.errors[:cnpj]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cnpj.blank"))
+    end
+
+    it "returns error message when cnpj is empty" do
+      user.cnpj = ""
+      user.valid?
+      expect(user.errors[:cnpj]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cnpj.blank"))
+    end
+
+    it "returns error message when cnpj format is invalid" do
+      user.cnpj = "00.000.000/0000-00"
+      user.valid?
+      expect(user.errors[:cnpj]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
+    end
+
+    it "returns error message when cnpj is invalid" do
+      user.cnpj = "00000000000000"
+      user.valid?
+      expect(user.errors[:cnpj]).to include(
+        I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
+    end
+  end
 end

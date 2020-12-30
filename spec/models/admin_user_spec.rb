@@ -191,6 +191,60 @@ RSpec.describe AdminUser, type: :model do
     end
   end
 
+  context "validates admin cpf" do
+    let!(:admin) { create(:admin_user) }
+
+    it "is valid" do
+      expect(admin).to be_valid
+    end
+
+    it "is not valid when nil" do
+      admin.cpf = nil
+      expect(admin).to_not be_valid
+    end
+
+    it "is not valid when invalid format" do
+      admin.cpf = "000.000.000-00"
+      expect(admin).to_not be_valid
+    end
+
+    it "returns error message when cpf is nil" do
+      admin.cpf = nil
+      admin.valid?
+      expect(admin.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.admin_user.attributes.cpf.blank"))
+    end
+
+    it "returns error message when cpf is empty" do
+      admin.cpf = ""
+      admin.valid?
+      expect(admin.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.admin_user.attributes.cpf.blank"))
+    end
+
+    it "returns error message when cpf is already in use" do
+      admin.save!
+      another_admin = AdminUser.new cpf: admin.cpf
+      another_admin.valid?
+      expect(another_admin.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.admin_user.attributes.cpf.taken"))
+    end
+
+    it "returns error message when cpf format is invalid" do
+      admin.cpf = "000.000.000-00"
+      admin.valid?
+      expect(admin.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
+    end
+
+    it "returns error message when cpf is invalid" do
+      admin.cpf = "00000000000"
+      admin.valid?
+      expect(admin.errors[:cpf]).to include(
+        I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
+    end
+  end
+
   context "validates admin roles" do
     let!(:admin) { create(:admin_user) }
 

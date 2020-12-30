@@ -162,7 +162,8 @@ RSpec.describe "AdminUsers", type: :request do
     let!(:params) {{
       name: "Test Full Name",
       email: "other.test@adotae.com.br",
-      password: "Test@0304"
+      password: "Test@0304",
+      cpf: CPF.generate
     }}
 
     before { post admin_users_path, params: params }
