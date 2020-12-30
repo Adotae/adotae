@@ -6,9 +6,7 @@ class AdminUser < ApplicationRecord
   has_many :blacklisted_tokens, dependent: :delete_all
 
   # Validations
-  validates :name,
-            presence: true,
-            length: { in: 10..255 }
+  validates :name, presence: true, length: { in: 10..255 }
 
   validates :email,
             presence: true,
@@ -20,11 +18,15 @@ class AdminUser < ApplicationRecord
             length: { in: 8..100, allow_nil: true },
             format: { with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\^&*]).{8,100}\Z/, allow_nil: true }
 
+  validates :cpf, presence: true, uniqueness: true
+  validate :cpf_is_valid?
+
   # Relations
   has_many :roles, dependent: :destroy
 
   # Scopes
   scope :active, -> { where(disabled: false) }
+  scope :by_cpf, -> (cpf) { where(cpf: cpf) }
 
   has_secure_password
 
@@ -49,5 +51,16 @@ class AdminUser < ApplicationRecord
 
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
+  end
+
+  private
+
+  def cpf_is_valid?
+    if cpf.match(/\A\d+\Z/)
+      return unless CPF.valid?(cpf)
+      errors.add(:cpf, I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
+    else
+      errors.add(:cpf, I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
+    end
   end
 end

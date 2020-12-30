@@ -4,11 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Users", type: :request do
   let!(:user) { create(:user) }
-  let!(:admin) {
-    admin = create(:admin_user)
-    admin.add_role("admin")
-    admin
-  }
+  let!(:admin) { create(:admin) }
   let!(:user_tokens) { jwt_and_refresh_token(user, "user") }
   let!(:admin_tokens) { jwt_and_refresh_token(admin, "admin_user") }
   let!(:user_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{user_tokens[0]}" }}

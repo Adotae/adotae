@@ -5,5 +5,6 @@ FactoryBot.define do
     name { "Test Test Test" }
     email { "test@adotae.com.br" }
     password { "AdotaeTest@0101" }
+    cpf { CPF.generate }
   end
 end

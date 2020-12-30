@@ -8,9 +8,7 @@ class User < ApplicationRecord
   has_secure_password
 
   # Validations
-  validates :name,
-            presence: true,
-            length: { in: 10..255 }
+  validates :name, presence: true, length: { in: 10..255 }
 
   validates :email,
             presence: true,
@@ -26,7 +24,39 @@ class User < ApplicationRecord
             length: { in: 8..100, allow_nil: true },
             format: { with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\^&*]).{8,100}\Z/, allow_nil: true }
 
+  validates :cpf,
+            presence: { unless: :cnpj? },
+            uniqueness: { allow_nil: true }
+  validate :cpf_is_valid?
+
+  validates :cnpj, presence: { unless: :cpf? }
+  validate :cnpj_is_valid?
+ 
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
+  end
+
+  private
+
+  def cpf_is_valid?
+    return unless cpf.present?
+
+    if cpf.match(/\A\d+\Z/)
+      return if CPF.valid?(cpf)
+      errors.add(:cpf, I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
+    else
+      errors.add(:cpf, I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
+    end
+  end
+
+  def cnpj_is_valid?
+    return unless cnpj.present?
+    
+    if cnpj.match(/\A\d+\Z/)
+      return if CNPJ.valid?(cnpj)
+      errors.add(:cnpj, I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
+    else
+      errors.add(:cnpj, I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
+    end
   end
 end
