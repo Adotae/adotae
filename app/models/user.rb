@@ -5,8 +5,6 @@ class User < ApplicationRecord
   has_many :refresh_tokens, dependent: :delete_all
   has_many :blacklisted_tokens, dependent: :delete_all
 
-  has_secure_password
-
   # Validations
   validates :name, presence: true, length: { in: 10..255 }
 
@@ -31,6 +29,11 @@ class User < ApplicationRecord
 
   validates :cnpj, presence: { unless: :cpf? }
   validate :cnpj_is_valid?
+
+  # Relations
+  has_many :pets, dependent: :destroy
+
+  has_secure_password
 
   def juridical_person?
     cnpj.present?

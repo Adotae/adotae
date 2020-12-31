@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_29_205332) do
+ActiveRecord::Schema.define(version: 2020_12_30_233340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2020_12_29_205332) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "cpf"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
-    t.index ["cpf"], name: "index_admin_users_on_cpf", unique: true
   end
 
   create_table "blacklisted_tokens", force: :cascade do |t|
@@ -36,6 +35,24 @@ ActiveRecord::Schema.define(version: 2020_12_29_205332) do
     t.bigint "user_id"
     t.index ["admin_user_id"], name: "index_blacklisted_tokens_on_admin_user_id"
     t.index ["user_id"], name: "index_blacklisted_tokens_on_user_id"
+  end
+
+  create_table "pets", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "kind", null: false
+    t.string "breed", null: false
+    t.string "gender", null: false
+    t.integer "age", null: false
+    t.integer "height", null: false
+    t.integer "weight", null: false
+    t.boolean "neutered", null: false
+    t.boolean "dewormed", null: false
+    t.boolean "vaccinated", null: false
+    t.text "description"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
   create_table "refresh_tokens", force: :cascade do |t|
@@ -69,11 +86,11 @@ ActiveRecord::Schema.define(version: 2020_12_29_205332) do
     t.string "cnpj"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["phone"], name: "index_users_on_phone", unique: true
-    t.index ["cpf"], name: "index_users_on_cpf", unique: true
   end
 
   add_foreign_key "blacklisted_tokens", "admin_users"
   add_foreign_key "blacklisted_tokens", "users"
+  add_foreign_key "pets", "users"
   add_foreign_key "refresh_tokens", "admin_users"
   add_foreign_key "refresh_tokens", "users"
   add_foreign_key "roles", "admin_users"
