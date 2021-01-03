@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_30_233340) do
+ActiveRecord::Schema.define(version: 2021_01_03_215408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,28 @@ ActiveRecord::Schema.define(version: 2020_12_30_233340) do
     t.index ["email"], name: "index_admin_users_on_email", unique: true
   end
 
+  create_table "adoptions", force: :cascade do |t|
+    t.bigint "giver_id", null: false
+    t.bigint "adopter_id", null: false
+    t.bigint "associate_id", null: false
+    t.bigint "pet_id", null: false
+    t.string "status"
+    t.datetime "completed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["adopter_id"], name: "index_adoptions_on_adopter_id"
+    t.index ["associate_id"], name: "index_adoptions_on_associate_id"
+    t.index ["giver_id"], name: "index_adoptions_on_giver_id"
+    t.index ["pet_id"], name: "index_adoptions_on_pet_id"
+  end
+
+  create_table "associates", force: :cascade do |t|
+    t.string "name"
+    t.string "cnpj"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "blacklisted_tokens", force: :cascade do |t|
     t.string "token"
     t.datetime "expire_at"
@@ -35,6 +57,15 @@ ActiveRecord::Schema.define(version: 2020_12_30_233340) do
     t.bigint "user_id"
     t.index ["admin_user_id"], name: "index_blacklisted_tokens_on_admin_user_id"
     t.index ["user_id"], name: "index_blacklisted_tokens_on_user_id"
+  end
+
+  create_table "favorited_pets", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "pet_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pet_id"], name: "index_favorited_pets_on_pet_id"
+    t.index ["user_id"], name: "index_favorited_pets_on_user_id"
   end
 
   create_table "pets", force: :cascade do |t|
@@ -88,8 +119,14 @@ ActiveRecord::Schema.define(version: 2020_12_30_233340) do
     t.index ["phone"], name: "index_users_on_phone", unique: true
   end
 
+  add_foreign_key "adoptions", "associates"
+  add_foreign_key "adoptions", "pets"
+  add_foreign_key "adoptions", "users", column: "adopter_id"
+  add_foreign_key "adoptions", "users", column: "giver_id"
   add_foreign_key "blacklisted_tokens", "admin_users"
   add_foreign_key "blacklisted_tokens", "users"
+  add_foreign_key "favorited_pets", "pets"
+  add_foreign_key "favorited_pets", "users"
   add_foreign_key "pets", "users"
   add_foreign_key "refresh_tokens", "admin_users"
   add_foreign_key "refresh_tokens", "users"

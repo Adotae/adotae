@@ -49,6 +49,14 @@ class AdminUser < ApplicationRecord
     permission?("admin")
   end
 
+  def moderator?
+    permission?("moderator")
+  end
+
+  def manager?
+    permission?("manager")
+  end
+
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
   end

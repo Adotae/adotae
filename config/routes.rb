@@ -29,10 +29,19 @@ Rails.application.routes.draw do
   ) do
     resources :users do
       get :me, on: :collection
+
+      get 'pets/around', to: 'pets#around', on: :collection
+      get 'pets/favorites', to: 'pets#favorites', on: :collection
+      get 'pets/adoption', to: 'pets#adoption', on: :collection
+      get 'pets/around', to: 'pets#around', on: :member
+      get 'pets/favorites', to: 'pets#favorites', on: :member
+      get 'pets/adoption', to: 'pets#adoption', on: :member
     end
 
     resources :admin_users, path: 'admins' do
       get :me, on: :collection
     end
+
+    resources :pets
   end
 end

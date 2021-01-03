@@ -33,7 +33,17 @@ class User < ApplicationRecord
   # Relations
   has_many :pets, dependent: :destroy
 
+  has_many :fav_pets, class_name: "FavoritedPet"
+  has_many :favorited_pets, through: :fav_pets, source: :pet
+
+  has_many :donations, class_name: "Adoption", foreign_key: 'giver_id'
+  has_many :adoptions, class_name: "Adoption", foreign_key: 'adopter_id'
+
   has_secure_password
+
+  def adoptions_and_donations
+    Adoption.where("giver_id = ? OR adopter_id = ?", id, id)
+  end
 
   def juridical_person?
     cnpj.present?

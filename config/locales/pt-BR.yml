@@ -96,3 +96,6 @@ pt-BR:
       admin_user:
         not_found: 'AdminUser não encontrado'
         on_destroy: 'Erro ao excluir o AdminUser'
+      pet:
+        not_found: 'Pet não encontrado'
+        on_destroy: 'Erro ao excluir o pet'
