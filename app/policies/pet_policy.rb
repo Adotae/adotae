@@ -3,7 +3,7 @@
 class PetPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if admin?
+      if admin_user?
         scope.all
       else
         scope.where(user: @user)
@@ -17,34 +17,30 @@ class PetPolicy < ApplicationPolicy
   end
 
   def index?
-    @user.present?
+    admin_user? || user?
   end
 
   def show?
-    admin? || @pet.user == @user
+    admin_user? || @pet.user == @user
   end
 
   def create?
-    @user.present?
+    admin_role? || user?
   end
 
   def update?
-    admin? || @pet.user == @user
+    admin_role? || @pet.user == @user
   end
 
   def destroy?
-    admin? || @pet.user == @user
+    admin_role? || @pet.user == @user
   end
 
   def around?
-    @user.present?
+    manager_role? || user?
   end
 
   def favorites?
-    @user.present?
-  end
-
-  def adoption?
-    @user.present?
+    manager_role? || user?
   end
 end

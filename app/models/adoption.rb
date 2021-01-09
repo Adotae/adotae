@@ -2,10 +2,13 @@
 
 class Adoption < ApplicationRecord
   # Relations
-  belongs_to :user, foreign_key: 'giver_id'
-  belongs_to :user, foreign_key: 'adopter_id'
-  belongs_to :associate
+  belongs_to :giver, class_name: 'User', foreign_key: 'giver_id'
+  belongs_to :adopter, class_name: 'User', foreign_key: 'adopter_id', optional: true
+  belongs_to :associate, optional: true
   belongs_to :pet
+
+  # Scopes
+  scope :complete, -> { where(status: 'complete') }
 
   def completed?
     status == 'completed'

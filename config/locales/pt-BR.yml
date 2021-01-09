@@ -99,3 +99,10 @@ pt-BR:
       pet:
         not_found: 'Pet não encontrado'
         on_destroy: 'Erro ao excluir o pet'
+        cant_be_adopted: 'O pet informado não está disponível para adoção'
+      adoption:
+        not_found: 'Adoção não encontrada'
+        on_destroy: 'Erro ao excluir adoção'
+      donation:
+        not_found: 'Doação não encontrada'
+        on_destroy: 'Erro ao excluir doação'

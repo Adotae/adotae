@@ -2,26 +2,26 @@
 
 class AdminUserPolicy < ApplicationPolicy
   def me?
-    admin? || moderator? || manager?
+    admin_user?
   end
 
   def index?
-    admin?
+    admin_role?
   end
 
   def show?
-    admin?
+    admin_role?
   end
 
   def create?
-    admin?
+    admin_role?
   end
 
   def update?
-    admin?
+    admin_role?
   end
 
   def destroy?
-    admin?
+    admin_role?
   end
 end

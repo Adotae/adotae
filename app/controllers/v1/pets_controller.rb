@@ -6,12 +6,14 @@ module V1
 
     def index
       if @current_admin_user
-        user_id = params[:user_id]
-        render_success(data: Pet.find_by(user_id: user_id)) if user_id
+        user_id = params[:user]
+        render_success(data: User.find(user_id).pets) if user_id
         render_success(data: Pet.all) unless user_id
       else
         render_success(data: @current_user.pets)
       end
+    rescue ActiveRecord::RecordNotFound
+      render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
     end
 
     def show
@@ -26,7 +28,11 @@ module V1
       @pet = Pet.new(pet_params)
 
       if @current_admin_user
-        render_error(:unprocessable_entity, message: "É necessário o id do usuário") and return if params[:user_id].blank?
+        render_error(
+          :unprocessable_entity,
+          message: "É necessário o id do usuário"
+        ) and return if params[:user_id].blank?
+        
         @pet.user = User.find(params[:user_id])
       else
         @pet.user = @current_user
@@ -72,21 +78,11 @@ module V1
 
     def favorites
       if @current_admin_user
-        user = User.find(params[:id])
-        render_success(data: user.favorited_pets)
+        user_id = params[:user]
+        render_success(data: User.find(user_id).favorited_pets) if user_id
+        render_success(data: []) unless user_id
       else
         render_success(data: @current_user.favorited_pets)
-      end
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
-    end
-
-    def adoption
-      if @current_admin_user
-        user = User.find(params[:id])
-        render_success(data: pets_in_adoption(user))
-      else
-        render_success(data: pets_in_adoption(@current_user))
       end
     rescue ActiveRecord::RecordNotFound
       render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
@@ -109,11 +105,6 @@ module V1
         :photos,
         :description
       )
-    end
-
-    def pets_in_adoption(user)
-      adoptions = @current_user.adoptions_and_donations.where(status: 'incomplete')
-      adoptions.map{ |adoption| adoption.pet }
     end
 
     def authorize_user

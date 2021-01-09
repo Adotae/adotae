@@ -6,22 +6,22 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    admin?
+    admin_user?
   end
 
   def show?
-    admin?
+    admin_user?
   end
 
   def create?
-    admin?
+    manager_role?
   end
 
   def update?
-    admin?
+    manager_role?
   end
 
   def destroy?
-    admin?
+    manager_role?
   end
 end

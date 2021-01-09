@@ -41,10 +41,6 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def adoptions_and_donations
-    Adoption.where("giver_id = ? OR adopter_id = ?", id, id)
-  end
-
   def juridical_person?
     cnpj.present?
   end

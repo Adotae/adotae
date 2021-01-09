@@ -17,16 +17,20 @@ class ApplicationPolicy
       @user.instance_of?(User)
     end
   
-    def admin?
+    def admin_user?
       @user.instance_of?(AdminUser) && @user.admin?
     end
-  
-    def moderator?
-      @user.instance_of?(AdminUser) && @user.moderator?
+
+    def admin_role?
+      admin_user? && @user.admin?
     end
   
-    def manager?
-      @user.instance_of?(AdminUser) && @user.manager?
+    def moderator_role?
+      admin_user? && @user.moderator?
+    end
+  
+    def manager_role?
+      admin_user? && @user.manager?
     end
   end
 
@@ -62,15 +66,19 @@ class ApplicationPolicy
     @user.instance_of?(User)
   end
 
-  def admin?
+  def admin_user?
     @user.instance_of?(AdminUser) && @user.admin?
   end
 
-  def moderator?
-    @user.instance_of?(AdminUser) && @user.moderator?
+  def admin_role?
+    admin_user? && @user.admin?
   end
 
-  def manager?
-    @user.instance_of?(AdminUser) && @user.manager?
+  def moderator_role?
+    admin_user? && @user.moderator?
+  end
+
+  def manager_role?
+    admin_user? && @user.manager?
   end
 end
