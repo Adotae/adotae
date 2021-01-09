@@ -1,5 +1,5 @@
 module ApiErrors::ResourceErrors
-  class ResourceNotFoundError < BaseError
+  class ResourceNotFoundError < ApiErrors::BaseError
     def status
       :not_found
     end

@@ -1,5 +1,5 @@
 module ApiErrors::AdoptionErrors
-  class AdoptionOnDestroyError < BaseError
+  class AdoptionOnDestroyError < ApiErrors::BaseError
     def status
       :bad_request
     end

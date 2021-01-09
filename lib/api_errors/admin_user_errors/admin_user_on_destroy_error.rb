@@ -1,5 +1,5 @@
 module ApiErrors::AdminUserErrors
-  class AdminUserOnDestroyError < BaseError
+  class AdminUserOnDestroyError < ApiErrors::BaseError
     def status
       :bad_request
     end

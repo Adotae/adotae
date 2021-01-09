@@ -1,5 +1,5 @@
 module ApiErrors::AdminUserErrors
-  class AdminUserNotFoundError < BaseError;
+  class AdminUserNotFoundError < ApiErrors::BaseError;
     def status
       :not_found
     end

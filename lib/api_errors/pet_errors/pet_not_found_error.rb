@@ -1,5 +1,5 @@
 module ApiErrors::PetErrors
-  class PetNotFoundError < BaseError
+  class PetNotFoundError < ApiErrors::BaseError
     def status
       :not_found
     end

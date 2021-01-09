@@ -1,5 +1,5 @@
 module ApiErrors::AdoptionErrors
-  class AdoptionNotFoundError < BaseError
+  class AdoptionNotFoundError < ApiErrors::BaseError
     def status
       :not_found
     end

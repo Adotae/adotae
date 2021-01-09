@@ -1,11 +1,11 @@
 # frozen_string_literals: true
 
 module ApiErrors
-  class BaseError < StandardError
+  class ApiErrors::BaseError < StandardError
     include ActiveModel::Serialization
 
     attr_reader :status, :message
-    
+
     def initialize
       @status = status
       @message = message

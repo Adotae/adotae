@@ -1,5 +1,5 @@
 module ApiErrors::UserErrors
-  class UserNotFoundError < BaseError
+  class UserNotFoundError < ApiErrors::BaseError
     def status
       :not_found
     end

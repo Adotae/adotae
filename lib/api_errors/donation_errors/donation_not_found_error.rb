@@ -1,5 +1,5 @@
 module ApiErrors::DonationErrors
-  class DonationNotFoundError < BaseError
+  class DonationNotFoundError < ApiErrors::BaseError
     def status
       :not_found
     end

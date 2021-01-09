@@ -1,5 +1,5 @@
 module ApiErrors::UserErrors
-  class MissingUserIdError < BaseError
+  class MissingUserIdError < ApiErrors::BaseError
     def status
       :unprocessable_entity
     end

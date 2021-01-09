@@ -1,5 +1,5 @@
 module ApiErrors::PetErrors
-  class PetOnDestroyError < BaseError
+  class PetOnDestroyError < ApiErrors::BaseError
     def status
       :bad_request
     end

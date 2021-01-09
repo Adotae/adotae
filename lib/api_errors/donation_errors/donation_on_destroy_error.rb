@@ -1,5 +1,5 @@
 module ApiErrors::DonationErrors
-  class DonationOnDestroyError < BaseError
+  class DonationOnDestroyError < ApiErrors::BaseError
     def status
       :bad_request
     end

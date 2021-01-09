@@ -1,5 +1,5 @@
 module ApiErrors::PetErrors
-  class PetCantBeAdoptedError < BaseError
+  class PetCantBeAdoptedError < ApiErrors::BaseError
     def status
       :bad_request
     end

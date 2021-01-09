@@ -1,5 +1,5 @@
 module ApiErrors::AuthorizationErrors
-  class NotAuthorizedError < BaseError
+  class NotAuthorizedError < ApiErrors::BaseError
     def status
       :forbidden
     end
