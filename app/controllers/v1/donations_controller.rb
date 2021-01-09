@@ -12,8 +12,6 @@ module V1
       else
         render_success(data: @current_user.donations)
       end
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
     end
 
     def show
@@ -21,16 +19,12 @@ module V1
       authorize @donation
       render_success(data: @donation)
     rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.donation.not_found"))
+      raise DonationErrors::DonationNotFoundError
     end
 
     def create
       if @current_admin_user
-        render_error(
-          :unprocessable_entity,
-          message: "É necessário o id do usuário"
-        ) and return if params[:user_id].blank?
-
+        raise UserErrors::MissingUserIdError unless params[:user_id].present?
         giver = User.find(params[:user_id])
       else
         giver = @current_user
@@ -55,13 +49,6 @@ module V1
       else
         render_error(:unprocessable_entity, object: @adoption)
       end
-    rescue ActiveRecord::RecordNotFound => e
-      case e.model
-      when User.name
-        render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
-      when Pet.name
-        render_error(:not_found, message: I18n.t("adotae.errors.pet.not_found"))
-      end
     end
 
     def update
@@ -72,18 +59,15 @@ module V1
         render_error(:unprocessable_entity, object: @donation)
       end
     rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.donation.not_found"))
+      raise DonationErrors::DonationNotFoundError
     end
 
     def destroy
       @donation = Adoption.find(params[:id])
-      if @donation.destroy
-        render_success(data: @donation)
-      else
-        render_error(:bad_request, message: I18n.t("adotae.errors.donation.on_destroy"))
-      end
+      raise DonationErrors::DonationOnDestroyError unless @donation.destroy
+      render_success(data: @donation)
     rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.donation.not_found"))
+      raise DonationErrors::DonationNotFoundError
     end
 
     private

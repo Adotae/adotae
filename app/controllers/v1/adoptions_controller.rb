@@ -12,25 +12,17 @@ module V1
       else
         render_success(data: @current_user.adoptions)
       end
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
     end
 
     def show
       @adoption = Adoption.find(params[:id])
       authorize @adoption
       render_success(data: @adoption)
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.adoption.not_found"))
     end
 
     def create
       if @current_admin_user
-        render_error(
-          :unprocessable_entity,
-          message: "É necessário o id do usuário"
-        ) and return if params[:user_id].blank?
-
+        raise UserErrors::MissingUserIdError unless params[:user_id].present?
         adopter = User.find(params[:user_id])
       else
         adopter = @current_user
@@ -38,24 +30,14 @@ module V1
 
       ##### AdoptionManager::CreateAdoption
       pet = Pet.find(params[:pet_id])
+      raise AdoptionErrors::PetCantBeAdoptedError unless pet.can_be_adopted?
 
-      if pet.can_be_adopted?
-        @adoption = Adoption.where(pet_id: pet.id).last
-        @adoption.update(adopter_id: adopter.id)
-        pet.update(can_be_adopted: false)
-        render_success(data: @adoption)
-      else
-        render_error(:not_found, message: I18n.t("adotae.errors.pet.cant_be_adopted")) and return
-      end
+      @adoption = Adoption.where(pet_id: pet.id).last
+      @adoption.update(adopter_id: adopter.id)
+      pet.update(can_be_adopted: false)
+
+      render_success(data: @adoption)
       #####
-
-    rescue ActiveRecord::RecordNotFound => e
-      case e.model
-      when User.name
-        render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
-      when Pet.name
-        render_error(:not_found, message: I18n.t("adotae.errors.pet.not_found"))
-      end
     end
 
     def update
@@ -65,19 +47,12 @@ module V1
       else
         render_error(:unprocessable_entity, object: @adoption)
       end
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.adoption.not_found"))
     end
 
     def destroy
       @adoption = Adoption.find(params[:id])
-      if @adoption.destroy
-        render_success(data: @adoption)
-      else
-        render_error(:bad_request, message: I18n.t("adotae.errors.adoption.on_destroy"))
-      end
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.adoption.not_found"))
+      raise AdoptionErrors::AdoptionOnDestroyError unless @adoption.destroy
+      render_success(data: @adoption)
     end
 
     private
