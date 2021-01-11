@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class AdminUser < ApplicationRecord
-  api_guard_associations refresh_token: "refresh_tokens", blacklisted_token: "blacklisted_tokens"
-  has_many :refresh_tokens, dependent: :delete_all
-  has_many :blacklisted_tokens, dependent: :delete_all
+  include AccountValidatable
+
+  api_guard_associations refresh_token: "refresh_tokens",
+                         blacklisted_token: "blacklisted_tokens"
 
   # Validations
   validates :name, presence: true, length: { in: 10..255 }
@@ -23,6 +24,9 @@ class AdminUser < ApplicationRecord
 
   # Relations
   has_many :roles, dependent: :destroy
+
+  has_many :refresh_tokens, dependent: :delete_all
+  has_many :blacklisted_tokens, dependent: :delete_all
 
   # Scopes
   scope :active, -> { where(disabled: false) }
@@ -59,13 +63,5 @@ class AdminUser < ApplicationRecord
 
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
-  end
-
-  private
-
-  def cpf_is_valid?
-    return if cpf.blank?
-    return if cpf.match(/\A\d+\Z/) && CPF.valid?(cpf)
-    errors.add(:cpf, I18n.t("activerecord.errors.models.admin_user.attributes.cpf.invalid"))
   end
 end

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  api_guard_associations refresh_token: "refresh_tokens", blacklisted_token: "blacklisted_tokens"
-  has_many :refresh_tokens, dependent: :delete_all
-  has_many :blacklisted_tokens, dependent: :delete_all
+  include AccountValidatable
+  
+  api_guard_associations refresh_token: "refresh_tokens",
+                         blacklisted_token: "blacklisted_tokens"
 
   # Validations
   validates :name, presence: true, length: { in: 10..255 }
@@ -39,6 +40,9 @@ class User < ApplicationRecord
   has_many :donations, class_name: "Adoption", foreign_key: 'giver_id'
   has_many :adoptions, class_name: "Adoption", foreign_key: 'adopter_id'
 
+  has_many :refresh_tokens, dependent: :delete_all
+  has_many :blacklisted_tokens, dependent: :delete_all
+
   has_secure_password
 
   def juridical_person?
@@ -47,19 +51,5 @@ class User < ApplicationRecord
 
   def as_json(options = {})
     super(options.merge({ except: [:password_digest] }))
-  end
-
-  private
-
-  def cpf_is_valid?
-    return if cpf.blank?
-    return if cpf.match(/\A\d+\Z/) && CPF.valid?(cpf)
-    errors.add(:cpf, I18n.t("activerecord.errors.models.user.attributes.cpf.invalid"))
-  end
-
-  def cnpj_is_valid?
-    return if cnpj.blank?
-    return if cnpj.match(/\A\d+\Z/) && CNPJ.valid?(cnpj)
-    errors.add(:cnpj, I18n.t("activerecord.errors.models.user.attributes.cnpj.invalid"))
   end
 end
