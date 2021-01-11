@@ -24,7 +24,7 @@ module V1
 
     def create
       giver = get_user
-      @donation = DonationService::CreateDonation.execute(giver, params[:pet_id])
+      @donation = AdoptionManager::DonationCreator.call(giver, params[:pet_id])
       render_success(data: @donation)
     end
 

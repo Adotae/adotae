@@ -1,17 +1,18 @@
 # frozen_string_literals: true
 
-module AdoptionService
-  class CreateAdoption < BaseService
-    def self.execute(adopter, pet_id)
-      self.new(adopter, pet_id).tap do |service|
-        return service.create_adoption
-      end
-    end
+module AdoptionManager
+  class AdoptionCreator < BaseService
 
     def initialize(adopter, pet_id)
       @adopter = adopter
       @pet = Pet.find(pet_id)
     end
+
+    def call
+      create_adoption
+    end
+
+    private
 
     def create_adoption
       raise PetErrors::PetCantBeAdoptedError unless @pet.can_be_adopted?

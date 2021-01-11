@@ -22,7 +22,7 @@ module V1
 
     def create
       adopter = get_user
-      @adoption = AdoptionService::CreateAdoption.execute(adopter, params[:pet_id])
+      @adoption = AdoptionManager::AdoptionCreator.call(adopter, params[:pet_id])
       render_success(data: @adoption)
     end
 
