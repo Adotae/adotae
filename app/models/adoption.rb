@@ -8,6 +8,7 @@ class Adoption < ApplicationRecord
   belongs_to :pet
 
   # Scopes
+  scope :incomplete, -> { where(status: 'incomplete') }
   scope :complete, -> { where(status: 'complete') }
 
   def completed?

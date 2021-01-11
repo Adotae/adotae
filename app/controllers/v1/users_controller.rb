@@ -21,12 +21,8 @@ module V1
     end
 
     def create
-      @user = User.new(user_params)
-      if @user.save
-        render_success(data: @user)
-      else
-        render_error(:unprocessable_entity, object: @user)
-      end
+      @user = User.create!(user_params)
+      render_success(data: @user)
     end
 
     def update

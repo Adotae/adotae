@@ -21,23 +21,9 @@ module V1
     end
 
     def create
-      if @current_admin_user
-        raise UserErrors::MissingUserIdError unless params[:user_id].present?
-        adopter = User.find(params[:user_id])
-      else
-        adopter = @current_user
-      end
-
-      ##### AdoptionManager::CreateAdoption
-      pet = Pet.find(params[:pet_id])
-      raise AdoptionErrors::PetCantBeAdoptedError unless pet.can_be_adopted?
-
-      @adoption = Adoption.where(pet_id: pet.id).last
-      @adoption.update(adopter_id: adopter.id)
-      pet.update(can_be_adopted: false)
-
+      adopter = get_user
+      @adoption = AdoptionService::CreateAdoption.execute(adopter, params[:pet_id])
       render_success(data: @adoption)
-      #####
     end
 
     def update
@@ -65,6 +51,15 @@ module V1
         :associate_id,
         :status
       )
+    end
+
+    def get_user
+      if @current_admin_user
+        raise UserErrors::MissingUserIdError unless params[:user_id].present?
+        User.find(params[:user_id])
+      else
+        @current_user
+      end
     end
 
     def authorize_user

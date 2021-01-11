@@ -23,32 +23,9 @@ module V1
     end
 
     def create
-      if @current_admin_user
-        raise UserErrors::MissingUserIdError unless params[:user_id].present?
-        giver = User.find(params[:user_id])
-      else
-        giver = @current_user
-      end
-
-      ##### AdoptionManager::CreateDonation
-      pet = giver.pets.find(params[:pet_id])
-      
-      @adoption = Adoption.new(
-        pet_id: pet.id,
-        giver_id: pet.user_id,
-        status: 'incomplete'
-      )
-
-      if @adoption.save
-        pet.update(can_be_adopted: true)
-      end
-      #####
-
-      if @adoption.persisted?
-        render_success(data: @adoption)
-      else
-        render_error(:unprocessable_entity, object: @adoption)
-      end
+      giver = get_user
+      @donation = DonationService::CreateDonation.execute(giver, params[:pet_id])
+      render_success(data: @donation)
     end
 
     def update
@@ -80,6 +57,15 @@ module V1
         :associate_id,
         :status
       )
+    end
+
+    def get_user
+      if @current_admin_user
+        raise UserErrors::MissingUserIdError unless params[:user_id].present?
+        User.find(params[:user_id])
+      else
+        @current_user
+      end
     end
 
     def authorize_user

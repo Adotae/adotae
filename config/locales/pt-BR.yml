@@ -105,9 +105,13 @@ pt-BR:
         not_found: 'Pet não encontrado'
         on_destroy: 'Erro ao excluir o pet'
         cant_be_adopted: 'O pet informado não está disponível para adoção'
+        cant_be_donated: 'Não é possível doar o pet informado'
       adoption:
         not_found: 'Adoção não encontrada'
         on_destroy: 'Erro ao excluir adoção'
+        cant_create: 'Não foi possível criar a adoção'
+        owner_cant_be_adopter: 'Não foi possível criar a adoção'
       donation:
         not_found: 'Doação não encontrada'
         on_destroy: 'Erro ao excluir doação'
+        cant_create: 'Não foi possível criar a doação'

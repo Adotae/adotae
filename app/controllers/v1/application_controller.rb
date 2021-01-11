@@ -8,9 +8,11 @@ module V1
     before_action :authenticate_and_set_user_or_admin_user
 
     # Error handling
+    rescue_from ApiErrors::BaseError, with: :handle_error
+
     rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-    rescue_from ApiErrors::BaseError, with: :handle_error
+    rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
 
     private
 
@@ -35,6 +37,10 @@ module V1
       else
         handle_error(ResourceErrors::ResourceNotFoundError.new)
       end
+    end
+
+    def record_invalid(error)
+      render_error(:unprocessable_entity, object: error.record)
     end
 
     def handle_error(error)
