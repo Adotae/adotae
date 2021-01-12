@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include AccountValidatable
+  include AccountValidationHelper
   
   api_guard_associations refresh_token: "refresh_tokens",
                          blacklisted_token: "blacklisted_tokens"

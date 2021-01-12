@@ -1,6 +1,6 @@
 # frozen_string_literals: true
 
-module AccountValidatable
+module AccountValidationHelper
   extend ActiveSupport::Concern
 
   private
