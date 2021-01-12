@@ -26,6 +26,9 @@ gem "pundit"
 # API versioning
 gem "versionist"
 
+# Serialization
+gem 'blueprinter'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
 

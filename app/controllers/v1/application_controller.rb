@@ -4,6 +4,7 @@ module V1
   class ApplicationController < ActionController::API
     include Pundit
     include ApiErrors
+    include Formatters::ResponseFormatter
 
     before_action :authenticate_and_set_user_or_admin_user
 

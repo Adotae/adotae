@@ -5,7 +5,12 @@ module Formatters
     def render_success(data: nil, message: nil)
       response = { status: I18n.t("adotae.response.success") }
       response[:message] = message if message
-      response[:data] = data if data
+
+      if data
+        model_class = get_model_class(data)
+        blueprint = get_blueprint(model_class) if model_class
+        response[:data] = blueprint ? blueprint.render_as_hash(data) : data
+      end
 
       render json: response, status: :ok
     end
@@ -21,6 +26,28 @@ module Formatters
       end
 
       render json: response, status: status
+    end
+
+    private
+
+    def is_a_model?(data)
+      data.is_a?(ApplicationRecord)
+    end
+
+    def is_a_enumerable?(data)
+      data.is_a?(Array) || data.is_a?(Enumerable)
+    end
+    
+    def get_model_class(data)
+      if is_a_enumerable?(data) && data.present? && is_a_model?(data[0])
+        data[0].class
+      elsif is_a_model?(data)
+        data.class
+      end
+    end
+
+    def get_blueprint(model_class)
+      "#{model_class.name}Blueprint".constantize rescue nil
     end
   end
 end

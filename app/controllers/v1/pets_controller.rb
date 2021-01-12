@@ -3,6 +3,8 @@
 module V1
   class PetsController < ApplicationController
     before_action :authorize_user, only: [:index, :create]
+    before_action :map_pet_photos, only: [:create, :update]
+    before_action :set_pet, only: [:show, :update, :destroy]
 
     def index
       if @current_admin_user
@@ -15,7 +17,6 @@ module V1
     end
 
     def show
-      @pet = Pet.find(params[:id])
       authorize @pet
       render_success(data: @pet)
     end
@@ -38,7 +39,6 @@ module V1
     end
 
     def update
-      @pet = Pet.find(params[:id])
       authorize @pet
       if @pet.update(pet_params)
         render_success(data: @pet)
@@ -83,9 +83,19 @@ module V1
         :neutered,
         :dewormed,
         :vaccinated,
-        :photos,
-        :description
+        :description,
+        :photos => []
       )
+    end
+
+    def map_pet_photos
+      if params[:photos].present?
+        params[:photos] = params[:photos].values
+      end
+    end
+
+    def set_pet
+      @pet = Pet.find(params[:id])
     end
 
     def authorize_user

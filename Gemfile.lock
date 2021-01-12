@@ -65,6 +65,7 @@ GEM
     awesome_print (1.8.0)
     bcrypt (3.1.16)
     bcrypt (3.1.16-java)
+    blueprinter (0.25.2)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
     bootsnap (1.5.1-java)
@@ -242,6 +243,7 @@ DEPENDENCIES
   api_guard (~> 0.5.2)
   awesome_print
   bcrypt (~> 3.1.7)
+  blueprinter
   bootsnap (>= 1.4.4)
   byebug
   cpf_cnpj
