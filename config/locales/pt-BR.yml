@@ -109,6 +109,29 @@ pt-BR:
             description:
               too_short: "A descrição precisa ter pelo menos %{count} caracteres"
               too_long: "A descrição deve ter no máximo %{count} caracteres"
+            user:
+              required: "É necessário o usuário proprietário"
+        favorited_pet:
+          attributes:
+            user:
+              required: "É necessário o usuário"
+            pet:
+              required: "É necessário o pet a ser favoritado"
+        adoption:
+          attributes:
+            status:
+              blank: "O status é necessário"
+              invalid: "Status inválido"
+            completed_at:
+              present: "A data de finalização do processo não pode ser definida na criação do mesmo"
+            giver:
+              required: "É necessário o usuário doador"
+            adopter:
+              required: "É necessário o usuário acolhedor"
+            associate:
+              required: "É necessário o veterinário ou clínica parceira"
+            pet:
+              required: "É necessário o pet a ser doado"
   api_guard:
     authentication:
       signed_in: "Logado com sucesso"
