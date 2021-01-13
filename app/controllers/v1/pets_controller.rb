@@ -72,7 +72,7 @@ module V1
     private
 
     def pet_params
-      params.permit(
+      params.required(
         :name,
         :kind,
         :breed,

@@ -1,117 +1,164 @@
 pt-BR:
   errors:
-    format: '%{message}'
+    format: "%{message}"
   activerecord:
     errors:
       messages:
-        record_invalid: 'Invalid record'
+        record_invalid: "Invalid record"
       models:
         user:
           attributes:
             name:
-              blank: 'É necessário o nome completo'
-              too_short: 'É necessário o nome completo'
-              too_long: 'O nome deve ter no máximo 255 caracteres'
+              blank: "É necessário o nome completo"
+              too_short: "É necessário o nome completo"
+              too_long: "O nome deve ter no máximo 255 caracteres"
             email:
-              blank: 'É necessário o email'
-              taken: 'Já existe uma conta com esse email'
-              invalid: 'Email inválido'
+              blank: "É necessário o email"
+              taken: "Já existe uma conta com esse email"
+              invalid: "Email inválido"
             phone:
-              taken: 'Já existe uma conta com esse número'
-              invalid: 'O número deve estar no formato (xx) 9xxxx-xxxx'
+              taken: "Já existe uma conta com esse número"
+              invalid: "O número deve estar no formato (xx) 9xxxx-xxxx"
             password:
-              blank: 'É necessária a senha'
-              too_short: 'A senha deve ter pelo menos 8 caracteres'
-              too_long: 'A senha deve ter no máximo 100 caracteres'
-              invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
+              blank: "É necessária a senha"
+              too_short: "A senha deve ter pelo menos 8 caracteres"
+              too_long: "A senha deve ter no máximo 100 caracteres"
+              invalid: "A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número"
             password_confirmation:
-              confirmation: 'As senhas não são iguais'
+              confirmation: "As senhas não são iguais"
             cpf:
-              blank: 'É necessário o CPF ou CNPJ'
-              taken: 'Já existe uma conta com esse CPF'
-              invalid: 'CPF inválido'
+              blank: "É necessário o CPF ou CNPJ"
+              taken: "Já existe uma conta com esse CPF"
+              invalid: "CPF inválido"
             cnpj:
-              blank: 'É necessário o CPF ou CNPJ'
-              invalid: 'CNPJ inválido'
+              blank: "É necessário o CPF ou CNPJ"
+              invalid: "CNPJ inválido"
         admin_user:
           attributes:
             name:
-              blank: 'É necessário o nome completo'
-              too_short: 'É necessário o nome completo'
-              too_long: 'O nome deve ter no máximo 255 caracteres'
+              blank: "É necessário o nome completo"
+              too_short: "É necessário o nome completo"
+              too_long: "O nome deve ter no máximo 255 caracteres"
             email:
-              blank: 'É necessário o email'
-              taken: 'Já existe uma conta com esse email'
-              invalid: 'Email inválido'
+              blank: "É necessário o email"
+              taken: "Já existe uma conta com esse email"
+              invalid: "Email inválido"
             password:
-              blank: 'É necessária a senha'
-              too_short: 'A senha deve ter pelo menos 8 caracteres'
-              too_long: 'A senha deve ter no máximo 100 caracteres'
-              invalid: 'A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número'
+              blank: "É necessária a senha"
+              too_short: "A senha deve ter pelo menos 8 caracteres"
+              too_long: "A senha deve ter no máximo 100 caracteres"
+              invalid: "A senha deve ter pelo menos 8 caracteres, sendo uma letra maiúscula, uma minúscula, um caractere especial e um número"
             password_confirmation:
-              confirmation: 'As senhas não são iguais'
+              confirmation: "As senhas não são iguais"
             cpf:
-              blank: 'É necessário o CPF'
-              taken: 'Já existe uma conta com esse CPF'
-              invalid: 'CPF inválido'
+              blank: "É necessário o CPF"
+              taken: "Já existe uma conta com esse CPF"
+              invalid: "CPF inválido"
         role:
           attributes:
             role:
-              blank: 'É necessário o role'
-              invalid: 'Role inválido'
-              taken: 'Role já definido para o usuário'
+              blank: "É necessário o role"
+              invalid: "Role inválido"
+              taken: "Role já definido para o usuário"
             admin_user:
-              required: 'O id no AdminUser não foi informado ou é inválido'
+              required: "O id no AdminUser não foi informado ou é inválido"
+        pet:
+          attributes:
+            name:
+              blank: "É necessário o nome do pet"
+              too_short: "É necessário o nome completo"
+              too_long: "O nome deve ter no máximo 255 caracteres"
+            kind:
+              blank: "É necessário o tipo do pet"
+              invalid: "Tipo de pet inválido"
+            breed:
+              blank: "É necessário a raça do pet"
+              invalid: "Raça inválida"
+            gender:
+              blank: "É necessário o gênero do pet"
+              invalid: "Gênero do pet inválido"
+            age:
+              blank: "É necessário a idade do pet"
+              greater: "A idade tem de ser maior que %{count}"
+              less: "A idade tem de ser menor que %{count}"
+              not_an_integer: "A idade tem de ser um valor inteiro"
+            height:
+              blank: "É necessário a altura do pet"
+              greater: "A altura (em cm) tem de ser maior que %{count}"
+              less: "A altura (em cm) tem de ser menor que %{count}"
+              not_an_integer: "A altura tem de ser um valor inteiro (em centímetros)"
+            weight:
+              blank: "É necessário o peso do pet"
+              greater: "O peso (em gr) tem de ser maior que %{count}"
+              less: "O peso (em gr) tem de ser menor que %{count}"
+              not_an_integer: "O peso tem de ser um valor inteiro (em gramas)"
+            neutered:
+              blank: "É necessário informar se o pet é castrado"
+            dewormed:
+              blank: "É necessário informar se o pet é vermifugado"
+            vaccinated:
+              blank: "É necessário informar se o pet é vacinado"
+            photos:
+              blank: "É necessário informar se o pet é vacinado"
+              too_short:
+                one: "É necessário pelo menos uma foto"
+                other: "É necessário pelo menos %{count} fotos"
+              too_long:
+                one: "O máximo de fotos permitidas é uma"
+                other: "O máximo de fotos permitidas são %{count}"
+            description:
+              too_short: "A descrição precisa ter pelo menos %{count} caracteres"
+              too_long: "A descrição deve ter no máximo %{count} caracteres"
   api_guard:
     authentication:
-      signed_in: 'Logado com sucesso'
-      signed_out: 'Logout com sucesso'
-      invalid_login_credentials: 'Email ou senha errados'
+      signed_in: "Logado com sucesso"
+      signed_out: "Logout com sucesso"
+      invalid_login_credentials: "Email ou senha errados"
     password:
-      changed: 'Senha alterada com sucesso'
+      changed: "Senha alterada com sucesso"
     registration:
-      signed_up: 'Cadastro efetuado com sucesso'
-      account_deleted: 'Conta deletada com sucesso'
+      signed_up: "Cadastro efetuado com sucesso"
+      account_deleted: "Conta deletada com sucesso"
     access_token:
-      refreshed: 'Token atualizado com sucesso'
-      missing: 'É necessário o token na requisição'
-      invalid: 'Access token inválido'
-      expired: 'Access token expirado'
+      refreshed: "Token atualizado com sucesso"
+      missing: "É necessário o token na requisição"
+      invalid: "Access token inválido"
+      expired: "Access token expirado"
     refresh_token:
-      invalid: 'Refresh token inválido'
-      missing: 'É necessário o refresh token na requisição'
+      invalid: "Refresh token inválido"
+      missing: "É necessário o refresh token na requisição"
     response:
-      success: 'success'
-      error: 'error'
+      success: "success"
+      error: "error"
   adotae:
     response:
-      success: 'success'
-      error: 'error'
+      success: "success"
+      error: "error"
     errors:
       base:
-        base_error: 'Algo deu errado'
+        base_error: "Algo deu errado"
       authorization:
-        unauthorized: 'Não é possivel acessar o recurso solicitado'
+        unauthorized: "Não é possivel acessar o recurso solicitado"
       user:
-        not_found: 'Recurso não encontrado'
+        not_found: "Recurso não encontrado"
       user:
-        missing_id: 'É necessário o id do usuário'
-        not_found: 'Usuário não encontrado'
-        on_destroy: 'Erro ao excluir o usuário'
+        missing_id: "É necessário o id do usuário"
+        not_found: "Usuário não encontrado"
+        on_destroy: "Erro ao excluir o usuário"
       admin_user:
-        not_found: 'AdminUser não encontrado'
-        on_destroy: 'Erro ao excluir o AdminUser'
+        not_found: "AdminUser não encontrado"
+        on_destroy: "Erro ao excluir o AdminUser"
       pet:
-        not_found: 'Pet não encontrado'
-        on_destroy: 'Erro ao excluir o pet'
-        cant_be_adopted: 'O pet informado não está disponível para adoção'
-        cant_be_donated: 'Não é possível doar o pet informado'
+        not_found: "Pet não encontrado"
+        on_destroy: "Erro ao excluir o pet"
+        cant_be_adopted: "O pet informado não está disponível para adoção"
+        cant_be_donated: "Não é possível doar o pet informado"
       adoption:
-        not_found: 'Adoção não encontrada'
-        on_destroy: 'Erro ao excluir adoção'
-        cant_create: 'Não foi possível criar a adoção'
-        owner_cant_be_adopter: 'Não foi possível criar a adoção'
+        not_found: "Adoção não encontrada"
+        on_destroy: "Erro ao excluir adoção"
+        cant_create: "Não foi possível criar a adoção"
+        owner_cant_be_adopter: "Não foi possível criar a adoção"
       donation:
-        not_found: 'Doação não encontrada'
-        on_destroy: 'Erro ao excluir doação'
-        cant_create: 'Não foi possível criar a doação'
+        not_found: "Doação não encontrada"
+        on_destroy: "Erro ao excluir doação"
+        cant_create: "Não foi possível criar a doação"
