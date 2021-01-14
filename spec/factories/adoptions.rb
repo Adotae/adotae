@@ -4,5 +4,9 @@ FactoryBot.define do
     adopter factory: :user
     pet
     status { "incomplete" }
+
+    factory :adoption_with_completed_at, aliases: [:donation_with_completed_at] do
+      completed_at { Date.yesterday }
+    end
   end
 end

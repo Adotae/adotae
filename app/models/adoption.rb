@@ -5,7 +5,6 @@ class Adoption < ApplicationRecord
 
   # Validations
   validates :status, presence: true
-  validate  :initial_status?, on: :create
   validate  :status_is_defined?, on: :update
   
   validates :completed_at, absence: true, on: :create
@@ -30,11 +29,6 @@ class Adoption < ApplicationRecord
 
   def set_initial_status
     self.status = "incomplete"
-  end
-
-  def initial_status?
-    return if status == "incomplete"
-    errors.add(:status, I18n.t("activerecord.errors.models.adoption.attributes.status.invalid"))
   end
 
   def status_is_defined?
