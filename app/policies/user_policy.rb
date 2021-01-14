@@ -14,14 +14,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    manager_role?
+    admin_role? || manager_role?
   end
 
   def update?
-    manager_role?
+    admin_role?
   end
 
   def destroy?
-    manager_role?
+    admin_role?
   end
 end

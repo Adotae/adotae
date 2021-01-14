@@ -1,27 +1,80 @@
 require 'rails_helper'
 
 RSpec.describe PetPolicy, type: :policy do
-  let(:user) { User.new }
+  subject { PetPolicy.new(user, pet) }
 
-  subject { described_class }
+  let(:pet) { create(:pet) }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "unauthenticated" do
+    let(:user) { nil }
+
+    it { should_not permit(:index) }
+    it { should_not permit(:show) }
+    it { should_not permit(:create) }
+    it { should_not permit(:update) }
+    it { should_not permit(:destroy) }
   end
 
-  permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "for a random user" do
+    let(:user) { create(:user) }
+
+    it { should     permit(:index) }
+    it { should     permit(:create) }
+    it { should     permit(:around) }
+    it { should     permit(:favorites) }
+
+    it { should_not permit(:show) }
+    it { should_not permit(:update) }
+    it { should_not permit(:destroy) }
   end
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "for owner user" do
+    let(:user) { pet.user }
+
+    it { should permit(:index) }
+    it { should permit(:show) }
+    it { should permit(:create) }
+    it { should permit(:update) }
+    it { should permit(:destroy) }
+    it { should permit(:around) }
+    it { should permit(:favorites) }
   end
 
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "for an manager" do
+    let(:user) { create(:manager) }
+
+    it { should     permit(:index) }
+    it { should     permit(:show) }
+    it { should     permit(:around) }
+    it { should     permit(:favorites) }
+
+    it { should_not permit(:create) }
+    it { should_not permit(:update) }
+    it { should_not permit(:destroy) }
   end
 
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "for an moderator" do
+    let(:user) { create(:moderator) }
+
+    it { should     permit(:index) }
+    it { should     permit(:show) }
+
+    it { should_not permit(:create) }
+    it { should_not permit(:update) }
+    it { should_not permit(:destroy) }
+    it { should_not permit(:around) }
+    it { should_not permit(:favorites) }
+  end
+
+  context "for an admin" do
+    let(:user) { create(:admin) }
+
+    it { should permit(:index) }
+    it { should permit(:show) }
+    it { should permit(:create) }
+    it { should permit(:update) }
+    it { should permit(:destroy) }
+    it { should permit(:around) }
+    it { should permit(:favorites) }
   end
 end

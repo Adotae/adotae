@@ -26,17 +26,11 @@ class Pet < ApplicationRecord
             presence: true,
             numericality: { only_integer: true, greater_than: 0, less_than: 500000 }
 
-  validates :neutered,
-            presence: true,
-            inclusion: { in: [true, false] }
+  validates :neutered, inclusion: { in: [true, false] }
 
-  validates :dewormed,
-            presence: true,
-            inclusion: { in: [true, false] }
+  validates :dewormed, inclusion: { in: [true, false] }
 
-  validates :vaccinated,
-            presence: true,
-            inclusion: { in: [true, false] }
+  validates :vaccinated, inclusion: { in: [true, false] }
 
   validates :photos, presence: true, array_length: { in: 1..6 }
 

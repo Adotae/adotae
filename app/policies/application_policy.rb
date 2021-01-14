@@ -14,11 +14,11 @@ class ApplicationPolicy
     protected
 
     def user?
-      @user.instance_of?(User)
+      @user.is_a?(User)
     end
   
     def admin_user?
-      @user.instance_of?(AdminUser) && @user.admin?
+      @user.is_a?(AdminUser)
     end
 
     def admin_role?
@@ -35,7 +35,6 @@ class ApplicationPolicy
   end
 
   def initialize(user, record)
-    raise Pundit::NotAuthorizedError unless user
     @user = user
     @record = record
   end
@@ -63,11 +62,11 @@ class ApplicationPolicy
   protected
 
   def user?
-    @user.instance_of?(User)
+    @user.is_a?(User)
   end
 
   def admin_user?
-    @user.instance_of?(AdminUser) && @user.admin?
+    @user.is_a?(AdminUser)
   end
 
   def admin_role?

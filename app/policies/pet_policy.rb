@@ -37,10 +37,10 @@ class PetPolicy < ApplicationPolicy
   end
 
   def around?
-    manager_role? || user?
+    admin_role? || manager_role? || user?
   end
 
   def favorites?
-    manager_role? || user?
+    admin_role? || manager_role? || user?
   end
 end

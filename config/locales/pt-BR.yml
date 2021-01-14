@@ -79,25 +79,25 @@ pt-BR:
               invalid: "Gênero do pet inválido"
             age:
               blank: "É necessário a idade do pet"
-              greater: "A idade tem de ser maior que %{count}"
-              less: "A idade tem de ser menor que %{count}"
+              greater_than: "A idade tem de ser maior que %{count}"
+              less_than: "A idade tem de ser menor que %{count}"
               not_an_integer: "A idade tem de ser um valor inteiro"
             height:
               blank: "É necessário a altura do pet"
-              greater: "A altura (em cm) tem de ser maior que %{count}"
-              less: "A altura (em cm) tem de ser menor que %{count}"
+              greater_than: "A altura (em cm) tem de ser maior que %{count}"
+              less_than: "A altura (em cm) tem de ser menor que %{count}"
               not_an_integer: "A altura tem de ser um valor inteiro (em centímetros)"
             weight:
               blank: "É necessário o peso do pet"
-              greater: "O peso (em gr) tem de ser maior que %{count}"
-              less: "O peso (em gr) tem de ser menor que %{count}"
+              greater_than: "O peso (em gr) tem de ser maior que %{count}"
+              less_than: "O peso (em gr) tem de ser menor que %{count}"
               not_an_integer: "O peso tem de ser um valor inteiro (em gramas)"
             neutered:
-              blank: "É necessário informar se o pet é castrado"
+              inclusion: "É necessário informar se o pet é castrado"
             dewormed:
-              blank: "É necessário informar se o pet é vermifugado"
+              inclusion: "É necessário informar se o pet é vermifugado"
             vaccinated:
-              blank: "É necessário informar se o pet é vacinado"
+              inclusion: "É necessário informar se o pet é vacinado"
             photos:
               blank: "É necessário informar se o pet é vacinado"
               too_short:
