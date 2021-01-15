@@ -12,5 +12,27 @@ FactoryBot.define do
       cpf { nil }
       cnpj { CNPJ.generate }
     end
+
+    factory :user_with_pets do
+      transient do
+        pets_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:pet, evaluator.pets_count, user: user)
+        user.reload
+      end
+    end
+
+    factory :user_with_favorited_pets do
+      transient do
+        pets_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:favorited_pet, evaluator.pets_count, user: user)
+        user.reload
+      end
+    end
   end
 end
