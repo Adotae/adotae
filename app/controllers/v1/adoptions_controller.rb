@@ -28,16 +28,13 @@ module V1
 
     def update
       @adoption = Adoption.find(params[:id])
-      if @adoption.update(adoption_params)
-        render_success(data: @adoption)
-      else
-        render_error(:unprocessable_entity, object: @adoption)
-      end
+      @adoption.update!(adoption_params)
+      render_success(data: @adoption)
     end
 
     def destroy
       @adoption = Adoption.find(params[:id])
-      raise AdoptionErrors::AdoptionOnDestroyError unless @adoption.destroy
+      @adoption.destroy!
       render_success(data: @adoption)
     end
 

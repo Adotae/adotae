@@ -12,8 +12,6 @@ module V1
     def show
       @user = User.find(params[:id])
       render_success(data: @user)
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
     end
 
     def me
@@ -27,24 +25,14 @@ module V1
 
     def update
       @user = User.find(params[:id])
-      if @user.update(user_params)
-        render_success(data: @user)
-      else
-        render_error(:unprocessable_entity, object: @user)
-      end
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
+      @user.update!(user_params)
+      render_success(data: @user)
     end
 
     def destroy
       @user = User.find(params[:id])
-      if @user.destroy
-        render_success(data: @user)
-      else
-        render_error(:bad_request, message: I18n.t("adotae.errors.user.on_destroy"))
-      end
-    rescue ActiveRecord::RecordNotFound
-      render_error(:not_found, message: I18n.t("adotae.errors.user.not_found"))
+      @user.destroy!
+      render_success(data: @user)
     end
 
     private

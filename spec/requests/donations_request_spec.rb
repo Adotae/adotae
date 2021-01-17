@@ -245,7 +245,7 @@ RSpec.describe "Donations", type: :request do
       body = JSON.parse(response.body)
       expect(Adoption).to have_received(:find)
       expect(donation).to have_received(:destroy)
-      expect(body["error"]).to include(I18n.t("adotae.errors.donation.on_destroy"))
+      expect(body["error"]).to include(I18n.t("adotae.errors.donation.not_destroyed"))
     end
 
     it "returns error message when not found" do

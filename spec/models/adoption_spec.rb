@@ -12,6 +12,7 @@ RSpec.describe Adoption, type: :model do
 
     it "is not valid" do
       adoption = Adoption.new(status: "complete")
+      expect(adoption.completed?).to be_truthy
       expect(adoption).to_not be_valid
     end
 

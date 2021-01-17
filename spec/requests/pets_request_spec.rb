@@ -261,7 +261,7 @@ RSpec.describe "Pets", type: :request do
       body = JSON.parse(response.body)
       expect(Pet).to have_received(:find).at_least(:once)
       expect(pet).to have_received(:destroy)
-      expect(body["error"]).to include(I18n.t("adotae.errors.pet.on_destroy"))
+      expect(body["error"]).to include(I18n.t("adotae.errors.pet.not_destroyed"))
     end
 
     it "returns error message when not found" do

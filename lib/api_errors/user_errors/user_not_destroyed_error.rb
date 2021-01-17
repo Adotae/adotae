@@ -1,11 +1,11 @@
 module ApiErrors::UserErrors
-  class UserOnDestroyError < ApiErrors::BaseError
+  class UserNotDestroyedError < ApiErrors::BaseError
     def status
       :bad_request
     end
 
     def message
-      I18n.t("adotae.errors.user.on_destroy")
+      I18n.t("adotae.errors.user.not_destroyed")
     end
   end
 end

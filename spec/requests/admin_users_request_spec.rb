@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "rails_helper"
 
 RSpec.describe "AdminUsers", type: :request do
@@ -427,7 +425,7 @@ RSpec.describe "AdminUsers", type: :request do
       body = JSON.parse(response.body)
       expect(AdminUser).to have_received(:find)
       expect(admin_user).to have_received(:destroy)
-      expect(body["error"]).to include(I18n.t("adotae.errors.admin_user.on_destroy"))
+      expect(body["error"]).to include(I18n.t("adotae.errors.admin_user.not_destroyed"))
     end
 
     it "returns error message when not found" do

@@ -6,14 +6,12 @@ module V1
     before_action :map_pet_photos, only: [:create, :update]
     before_action :set_pet, only: [:show, :update, :destroy]
 
+    before_action -> { select_user(need_user: false) }, only: [:index]
+    before_action -> { select_user(need_user: true) },  only: [:create, :favorites]
+
     def index
-      if @current_admin_user
-        user_id = params[:user]
-        render_success(data: User.find(user_id).pets) if user_id
-        render_success(data: Pet.all) unless user_id
-      else
-        render_success(data: @current_user.pets)
-      end
+      render_success(data: @user.pets) if @user
+      render_success(data: Pet.all) unless @user
     end
 
     def show
@@ -22,35 +20,23 @@ module V1
     end
 
     def create
-      @pet = Pet.new(pet_params)
-
-      if @current_admin_user
-        raise UserErrors::MissingUserIdError unless params[:user_id].present?
-        @pet.user = User.find(params[:user_id])
-      else
-        @pet.user = @current_user
-      end
-
-      if @pet.save
-        render_success(data: @pet)
-      else
-        render_error(:unprocessable_entity, object: @pet)
-      end
+      @pet = Pet.new(pet_params).tap{ |pet|
+        pet.user = @user
+        pet.save!
+      }
+      render_success(data: @pet)
     end
 
     def update
       authorize @pet
-      if @pet.update(pet_params)
-        render_success(data: @pet)
-      else
-        render_error(:unprocessable_entity, object: @pet)
-      end
+      @pet.update!(pet_params)
+      render_success(data: @pet)
     end
 
     def destroy
       @pet = Pet.find(params[:id])
       authorize @pet
-      raise PetErrors::PetOnDestroyError unless @pet.destroy
+      @pet.destroy!
       render_success(data: @pet)
     end
 
@@ -60,13 +46,7 @@ module V1
     end
 
     def favorites
-      if @current_admin_user
-        user_id = params[:user]
-        raise UserErrors::MissingUserIdError unless user_id.present?
-        render_success(data: User.find(user_id).favorited_pets)
-      else
-        render_success(data: @current_user.favorited_pets)
-      end
+      render_success(data: @user.favorited_pets)
     end
 
     private
@@ -96,6 +76,16 @@ module V1
 
     def set_pet
       @pet = Pet.find(params[:id])
+    end
+
+    def select_user(need_user)
+      if @current_admin_user
+        user_id = params[:user] || params[:user_id]
+        raise UserErrors::MissingUserIdError if need_user && !user_id
+        @user = User.find(user_id) if user_id
+      else
+        @user = @current_user
+      end
     end
 
     def authorize_user

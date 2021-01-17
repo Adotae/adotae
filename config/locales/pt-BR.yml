@@ -162,26 +162,27 @@ pt-BR:
         base_error: "Algo deu errado"
       authorization:
         unauthorized: "Não é possivel acessar o recurso solicitado"
-      user:
+      resource:
         not_found: "Recurso não encontrado"
+        not_destroyed: "Erro ao excluir o recurso"
       user:
         missing_id: "É necessário o id do usuário"
         not_found: "Usuário não encontrado"
-        on_destroy: "Erro ao excluir o usuário"
+        not_destroyed: "Erro ao excluir o usuário"
       admin_user:
         not_found: "AdminUser não encontrado"
-        on_destroy: "Erro ao excluir o AdminUser"
+        not_destroyed: "Erro ao excluir o AdminUser"
       pet:
         not_found: "Pet não encontrado"
-        on_destroy: "Erro ao excluir o pet"
+        not_destroyed: "Erro ao excluir o pet"
         cant_be_adopted: "O pet informado não está disponível para adoção"
         cant_be_donated: "Não é possível doar o pet informado"
       adoption:
         not_found: "Adoção não encontrada"
-        on_destroy: "Erro ao excluir adoção"
+        not_destroyed: "Erro ao excluir adoção"
         cant_create: "Não foi possível criar a adoção"
         owner_cant_be_adopter: "Não foi possível criar a adoção"
       donation:
         not_found: "Doação não encontrada"
-        on_destroy: "Erro ao excluir doação"
+        not_destroyed: "Erro ao excluir doação"
         cant_create: "Não foi possível criar a doação"

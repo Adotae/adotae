@@ -30,21 +30,20 @@ module V1
 
     def update
       @donation = Adoption.find(params[:id])
-      if @donation.update(donation_params)
-        render_success(data: @donation)
-      else
-        render_error(:unprocessable_entity, object: @donation)
-      end
+      @donation.update!(donation_params)
+      render_success(data: @donation)
     rescue ActiveRecord::RecordNotFound
       raise DonationErrors::DonationNotFoundError
     end
 
     def destroy
       @donation = Adoption.find(params[:id])
-      raise DonationErrors::DonationOnDestroyError unless @donation.destroy
+      @donation.destroy!
       render_success(data: @donation)
     rescue ActiveRecord::RecordNotFound
       raise DonationErrors::DonationNotFoundError
+    rescue ActiveRecord::RecordNotDestroyed
+      raise DonationErrors::DonationNotDestroyedError
     end
 
     private
