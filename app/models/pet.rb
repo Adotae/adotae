@@ -16,15 +16,27 @@ class Pet < ApplicationRecord
 
   validates :age,
             presence: true,
-            numericality: { only_integer: true, greater_than: 0, less_than: 100 }
+            numericality: {
+              only_integer: true,
+              greater_than: 0,
+              less_than_or_equal_to: 100
+            }
 
   validates :height,
             presence: true,
-            numericality: { only_integer: true, greater_than: 0, less_than: 500 }
+            numericality: {
+              only_integer: true,
+              greater_than: 0,
+              less_than_or_equal_to: 500
+            }
 
   validates :weight,
             presence: true,
-            numericality: { only_integer: true, greater_than: 0, less_than: 500000 }
+            numericality: {
+              only_integer: true,
+              greater_than: 0,
+              less_than_or_equal_to: 500000
+            }
 
   validates :neutered, inclusion: { in: [true, false] }
 

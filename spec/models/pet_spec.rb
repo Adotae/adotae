@@ -173,7 +173,7 @@ RSpec.describe Pet, type: :model do
       pet.age = 101
       pet.valid?
       expect(pet.errors[:age]).to include(
-        I18n.t("activerecord.errors.models.pet.attributes.age.less_than", count: 100))
+        I18n.t("activerecord.errors.models.pet.attributes.age.less_than_or_equal_to", count: 100))
     end
 
     it "returns error message when age is not integer" do
@@ -215,7 +215,7 @@ RSpec.describe Pet, type: :model do
       pet.height = 501 # in cm
       pet.valid?
       expect(pet.errors[:height]).to include(
-        I18n.t("activerecord.errors.models.pet.attributes.height.less_than", count: 500))
+        I18n.t("activerecord.errors.models.pet.attributes.height.less_than_or_equal_to", count: 500))
     end
 
     it "returns error message when height is not integer" do
@@ -257,7 +257,7 @@ RSpec.describe Pet, type: :model do
       pet.weight = 500001 # in grams
       pet.valid?
       expect(pet.errors[:weight]).to include(
-        I18n.t("activerecord.errors.models.pet.attributes.weight.less_than", count: 500000))
+        I18n.t("activerecord.errors.models.pet.attributes.weight.less_than_or_equal_to", count: 500000))
     end
 
     it "returns error message when weight is not integer" do

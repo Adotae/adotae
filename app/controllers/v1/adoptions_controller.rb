@@ -49,7 +49,8 @@ module V1
         :giver_id,
         :adopter_id,
         :associate_id,
-        :status
+        :status,
+        :completed_at
       )
     end
 

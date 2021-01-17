@@ -19,6 +19,12 @@ FactoryBot.define do
       Rack::Test::UploadedFile.new("spec/fixtures/photos/pet/03.jpg", "image/jpeg")
     ] }
 
+    before(:create) do |pet, evaluator|
+      if pet.invalid?
+        byebug
+      end
+    end
+
     factory :dog do
       kind { "dog" }
       breed { "shitzu" }
@@ -27,6 +33,15 @@ FactoryBot.define do
     factory :cat do
       kind { "cat" }
       breed { "shitzu" }
+    end
+
+    factory :pet_in_donation do
+      can_be_adopted { true }
+
+      after(:create) do |pet, evaluator|
+        create(:donation, pet: pet)
+        pet.reload
+      end
     end
   end
 end

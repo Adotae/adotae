@@ -34,5 +34,27 @@ FactoryBot.define do
         user.reload
       end
     end
+
+    factory :user_with_adoptions do
+      transient do
+        adoptions_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:adoption, evaluator.adoptions_count, adopter: user)
+        user.reload
+      end
+    end
+
+    factory :user_with_donations do
+      transient do
+        donations_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:donation, evaluator.donations_count, giver: user)
+        user.reload
+      end
+    end
   end
 end

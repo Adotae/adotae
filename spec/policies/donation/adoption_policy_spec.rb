@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe DonationPolicy, type: :policy do
-  subject { DonationPolicy.new(user, donation) }
+RSpec.describe Donation::AdoptionPolicy, type: :policy do
+  subject { Donation::AdoptionPolicy.new(user, donation) }
 
   let(:donation) { create(:donation) }
 

@@ -16,7 +16,7 @@ module V1
 
     def show
       @donation = Adoption.find(params[:id])
-      authorize @donation
+      authorize([:donation, @donation])
       render_success(data: @donation)
     rescue ActiveRecord::RecordNotFound
       raise DonationErrors::DonationNotFoundError
@@ -55,7 +55,8 @@ module V1
         :giver_id,
         :adopter_id,
         :associate_id,
-        :status
+        :status,
+        :completed_at
       )
     end
 
@@ -69,7 +70,7 @@ module V1
     end
 
     def authorize_user
-      authorize Adoption
+      authorize([:donation, Adoption])
     end
   end
 end

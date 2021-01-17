@@ -2,18 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "Pets", type: :request do
 
-  let!(:user) { create(:user_with_pets) }
-  let!(:manager) { create(:manager) }
-  let!(:moderator) { create(:moderator) }
-  let!(:admin) { create(:admin) }
-  let!(:user_tokens) { jwt_and_refresh_token(user, "user") }
-  let!(:manager_tokens) { jwt_and_refresh_token(manager, "admin_user") }
-  let!(:moderator_tokens) { jwt_and_refresh_token(moderator, "admin_user") }
-  let!(:admin_tokens) { jwt_and_refresh_token(admin, "admin_user") }
-  let!(:user_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{user_tokens[0]}" }}
-  let!(:manager_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{manager_tokens[0]}" }}
-  let!(:moderator_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{moderator_tokens[0]}" }}
-  let!(:admin_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{admin_tokens[0]}" }}
+  let(:user) { create(:user_with_pets) }
+  let(:admin) { create(:admin) }
+  let(:user_tokens) { jwt_and_refresh_token(user, "user") }
+  let(:admin_tokens) { jwt_and_refresh_token(admin, "admin_user") }
+  let(:user_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{user_tokens[0]}" }}
+  let(:admin_headers) {{ "HTTP_AUTHORIZATION" => "Bearer #{admin_tokens[0]}" }}
 
   describe "GET pets#index" do
     before { get pets_path }

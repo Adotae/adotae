@@ -80,17 +80,17 @@ pt-BR:
             age:
               blank: "É necessário a idade do pet"
               greater_than: "A idade tem de ser maior que %{count}"
-              less_than: "A idade tem de ser menor que %{count}"
+              less_than_or_equal_to: "A idade tem de ser menor ou igual a %{count}"
               not_an_integer: "A idade tem de ser um valor inteiro"
             height:
               blank: "É necessário a altura do pet"
               greater_than: "A altura (em cm) tem de ser maior que %{count}"
-              less_than: "A altura (em cm) tem de ser menor que %{count}"
+              less_than_or_equal_to: "A altura (em cm) tem de ser menor ou igual a %{count}"
               not_an_integer: "A altura tem de ser um valor inteiro (em centímetros)"
             weight:
               blank: "É necessário o peso do pet"
               greater_than: "O peso (em gr) tem de ser maior que %{count}"
-              less_than: "O peso (em gr) tem de ser menor que %{count}"
+              less_than_or_equal_to: "O peso (em gr) tem de ser menor ou igual a %{count}"
               not_an_integer: "O peso tem de ser um valor inteiro (em gramas)"
             neutered:
               inclusion: "É necessário informar se o pet é castrado"
