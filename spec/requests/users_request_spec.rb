@@ -381,7 +381,7 @@ RSpec.describe "Users", type: :request do
       body = JSON.parse(response.body)
       expect(User).to have_received(:find)
       expect(user).to have_received(:destroy)
-      expect(body["error"]).to include(I18n.t("adotae.errors.user.on_destroy"))
+      expect(body["error"]).to include(I18n.t("adotae.errors.user.not_destroyed"))
     end
 
     it "returns error message when not found" do

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "rails_helper"
 
 RSpec.describe AdminUser, type: :model do
@@ -248,11 +246,28 @@ RSpec.describe AdminUser, type: :model do
   context "validates admin roles" do
     let!(:admin) { create(:admin_user) }
 
-    it "add role for user" do
+    it "add manager role for user" do
+      admin.add_role("manager")
+      role = Role.where(admin_user_id: admin.id, role: "manager").last
+      expect(role).not_to be_nil
+      expect(role.active).to be_truthy
+      expect(admin.manager?).to be_truthy
+    end
+
+    it "add moderator role for user" do
+      admin.add_role("moderator")
+      role = Role.where(admin_user_id: admin.id, role: "moderator").last
+      expect(role).not_to be_nil
+      expect(role.active).to be_truthy
+      expect(admin.moderator?).to be_truthy
+    end
+
+    it "add admin role for user" do
       admin.add_role("admin")
       role = Role.where(admin_user_id: admin.id, role: "admin").last
       expect(role).not_to be_nil
       expect(role.active).to be_truthy
+      expect(admin.admin?).to be_truthy
     end
 
     it "remove role for user" do

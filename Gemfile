@@ -18,13 +18,16 @@ gem "puma", "~> 5.0"
 gem "bcrypt", "~> 3.1.7"
 
 # API token authentication (access and refresh tokens)
-gem "api_guard", "~> 0.5.2", github: "Adotae/api_guard", branch: "feat-multiple-resources"
+gem "api_guard", "~> 0.5.2"
 
 # API authorization
 gem "pundit"
 
 # API versioning
 gem "versionist"
+
+# Serialization
+gem "blueprinter"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
@@ -34,6 +37,10 @@ gem "rack-cors"
 
 # Validates CPF & CNPJ
 gem "cpf_cnpj"
+
+# Sentry for unhandled errors and exceptions
+gem "sentry-ruby"
+gem "sentry-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

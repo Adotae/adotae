@@ -2,15 +2,59 @@
 
 FactoryBot.define do
   factory :user do
-    name { "Test Test Test" }
-    email { "test@adotae.com.br" }
-    phone { "(11) 99999-8888" }
+    name { Faker::Name.name_with_middle }
+    email { Faker::Internet.unique.email }
+    phone { Faker::PhoneNumber.unique.cell_phone }
     password { "AdotaeTest@0101" }
     cpf { CPF.generate }
 
     factory :user_with_cnpj do
       cpf { nil }
       cnpj { CNPJ.generate }
+    end
+
+    factory :user_with_pets do
+      transient do
+        pets_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:pet, evaluator.pets_count, user: user)
+        user.reload
+      end
+    end
+
+    factory :user_with_favorited_pets do
+      transient do
+        pets_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:favorited_pet, evaluator.pets_count, user: user)
+        user.reload
+      end
+    end
+
+    factory :user_with_adoptions do
+      transient do
+        adoptions_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:adoption, evaluator.adoptions_count, adopter: user)
+        user.reload
+      end
+    end
+
+    factory :user_with_donations do
+      transient do
+        donations_count { 5 }
+      end
+
+      after(:create) do |user, evaluator|
+        create_list(:donation, evaluator.donations_count, giver: user)
+        user.reload
+      end
     end
   end
 end

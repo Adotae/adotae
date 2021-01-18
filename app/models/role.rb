@@ -3,8 +3,8 @@
 class Role < ApplicationRecord
   # Validations
   validates :role, presence: true
-  validate :role_is_defined?
-  validate :role_already_exits?, on: :create
+  validate  :role_is_defined?
+  validate  :role_already_exits?, on: :create
 
   # Relations
   belongs_to :admin_user

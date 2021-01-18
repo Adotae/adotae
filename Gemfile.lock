@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/Adotae/api_guard.git
-  revision: 51f9d3e05b79c246777279d87823e902ac1f3f13
-  branch: feat-multiple-resources
-  specs:
-    api_guard (0.5.2)
-      jwt (~> 2.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -68,9 +60,12 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    api_guard (0.5.2)
+      jwt (~> 2.2)
     awesome_print (1.8.0)
     bcrypt (3.1.16)
     bcrypt (3.1.16-java)
+    blueprinter (0.25.2)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
     bootsnap (1.5.1-java)
@@ -94,6 +89,11 @@ GEM
       railties (>= 5.0.0)
     faker (2.15.1)
       i18n (>= 1.6, < 2)
+    faraday (1.3.0)
+      faraday-net_http (~> 1.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
+    faraday-net_http (1.0.0)
     ffi (1.13.1)
     ffi (1.13.1-java)
     ffi (1.13.1-x64-mingw32)
@@ -124,6 +124,7 @@ GEM
     msgpack (1.3.3-java)
     msgpack (1.3.3-x64-mingw32)
     msgpack (1.3.3-x86-mingw32)
+    multipart-post (2.1.1)
     nio4r (2.5.4)
     nio4r (2.5.4-java)
     nokogiri (1.10.10)
@@ -194,6 +195,13 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.10.0)
+    ruby2_keywords (0.0.2)
+    sentry-rails (4.1.3)
+      rails (>= 5.0)
+      sentry-ruby (~> 4.1.2)
+    sentry-ruby (4.1.2)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      faraday (>= 1.0)
     simplecov (0.17.0)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -232,9 +240,10 @@ PLATFORMS
   x86-mswin32
 
 DEPENDENCIES
-  api_guard (~> 0.5.2)!
+  api_guard (~> 0.5.2)
   awesome_print
   bcrypt (~> 3.1.7)
+  blueprinter
   bootsnap (>= 1.4.4)
   byebug
   cpf_cnpj
@@ -248,6 +257,8 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.1.0)
   rspec-rails (~> 4.0.1)
+  sentry-rails
+  sentry-ruby
   simplecov
   spring
   tzinfo-data

@@ -10,6 +10,9 @@ AllCops:
     - 'config/**/*'
     - 'spec/**/*'
 
+Metrics/MethodLength:
+  Max: 15
+
 Layout/LineLength:
   Max: 118
 
@@ -47,4 +50,16 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 
 Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Lint/MissingSuper:
+  Enabled: false
+
+Bundler/OrderedGems:
   Enabled: false

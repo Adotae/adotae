@@ -2,10 +2,13 @@
 
 module V1
   class ApplicationController < ActionController::API
-    include Pundit
+    include Formatters::ResponseFormatter
+    include ErrorsHelper
 
     before_action :authenticate_and_set_user_or_admin_user
-    rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+    # Error handling
+    rescue_from ApiErrors::BaseError, with: :handle_error
 
     private
 
@@ -13,8 +16,8 @@ module V1
       @current_user || @current_admin_user
     end
 
-    def user_not_authorized
-      render_error(:forbidden, message: I18n.t("adotae.errors.authorization.unauthorized"))
+    def handle_error(error)
+      render_error(error.status, message: error.message)
     end
   end
 end

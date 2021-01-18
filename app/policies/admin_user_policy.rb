@@ -2,26 +2,26 @@
 
 class AdminUserPolicy < ApplicationPolicy
   def me?
-    user.instance_of?(AdminUser)
+    admin_user?
   end
 
   def index?
-    user.instance_of?(AdminUser) && user.admin?
+    admin_role?
   end
 
   def show?
-    user.instance_of?(AdminUser) && user.admin?
+    admin_role?
   end
 
   def create?
-    user.instance_of?(AdminUser) && user.admin?
+    admin_role?
   end
 
   def update?
-    user.instance_of?(AdminUser) && user.admin?
+    admin_role?
   end
 
   def destroy?
-    user.instance_of?(AdminUser) && user.admin?
+    admin_role?
   end
 end

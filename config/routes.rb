@@ -34,5 +34,13 @@ Rails.application.routes.draw do
     resources :admin_users, path: 'admins' do
       get :me, on: :collection
     end
+
+    resources :pets do
+      get :around, on: :collection
+      get :favorites, on: :collection
+    end
+
+    resources :adoptions
+    resources :donations
   end
 end

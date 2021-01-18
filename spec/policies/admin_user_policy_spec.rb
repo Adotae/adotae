@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "rails_helper"
 
 RSpec.describe AdminUserPolicy, type: :policy do
@@ -31,6 +29,7 @@ RSpec.describe AdminUserPolicy, type: :policy do
 
   context "for an manager" do
     let(:user) { create(:manager) }
+    let(:admin) { user }
 
     it { should     permit(:me) }
 
@@ -43,6 +42,7 @@ RSpec.describe AdminUserPolicy, type: :policy do
 
   context "for an moderator" do
     let(:user) { create(:moderator) }
+    let(:admin) { user }
 
     it { should     permit(:me) }
 
@@ -55,6 +55,7 @@ RSpec.describe AdminUserPolicy, type: :policy do
 
   context "for an admin" do
     let(:user) { create(:admin) }
+    let(:admin) { user }
 
     it { should permit(:me) }
     it { should permit(:index) }
