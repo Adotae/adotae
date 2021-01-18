@@ -12,6 +12,7 @@ class PetPolicy < ApplicationPolicy
   end
 
   def initialize(user, pet)
+    super
     @user = user
     @pet = pet
   end

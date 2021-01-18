@@ -13,6 +13,7 @@ module Donation
     end
 
     def initialize(user, donation)
+      super
       @user = user
       @donation = donation
     end

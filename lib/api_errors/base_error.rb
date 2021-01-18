@@ -4,8 +4,6 @@ module ApiErrors
   class BaseError < StandardError
     include ActiveModel::Serialization
 
-    attr_reader :status, :message
-
     def initialize
       @status = status
       @message = message

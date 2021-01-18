@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   include AccountValidationHelper
-  
+
   api_guard_associations refresh_token: "refresh_tokens",
                          blacklisted_token: "blacklisted_tokens"
 
@@ -34,11 +34,20 @@ class User < ApplicationRecord
   # Relations
   has_many :pets, dependent: :destroy
 
-  has_many :fav_pets, class_name: "FavoritedPet"
-  has_many :favorited_pets, through: :fav_pets, source: :pet
+  has_many :fav_pets, class_name: "FavoritedPet", dependent: :delete_all
+  has_many :favorited_pets, through: :fav_pets, source: :pet, dependent: :delete_all
 
-  has_many :donations, class_name: "Adoption", foreign_key: 'giver_id'
-  has_many :adoptions, class_name: "Adoption", foreign_key: 'adopter_id'
+  has_many :donations,
+            class_name: "Adoption",
+            foreign_key: "giver_id",
+            inverse_of: :giver,
+            dependent: :delete_all
+
+  has_many :adoptions,
+            class_name: "Adoption",
+            foreign_key: "adopter_id",
+            inverse_of: :adopter,
+            dependent: :delete_all
 
   has_many :refresh_tokens, dependent: :delete_all
   has_many :blacklisted_tokens, dependent: :delete_all

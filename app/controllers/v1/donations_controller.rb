@@ -23,8 +23,7 @@ module V1
     end
 
     def create
-      giver = get_user
-      @donation = AdoptionManager::DonationCreator.call(giver, params[:pet_id])
+      @donation = AdoptionManager::DonationCreator.call(user, params[:pet_id])
       render_success(data: @donation)
     end
 
@@ -59,9 +58,9 @@ module V1
       )
     end
 
-    def get_user
+    def user
       if @current_admin_user
-        raise UserErrors::MissingUserIdError unless params[:user_id].present?
+        raise UserErrors::MissingUserIdError if params[:user_id].blank?
         User.find(params[:user_id])
       else
         @current_user

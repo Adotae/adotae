@@ -12,6 +12,7 @@ class AdoptionPolicy < ApplicationPolicy
   end
 
   def initialize(user, adoption)
+    super
     @user = user
     @adoption = adoption
   end

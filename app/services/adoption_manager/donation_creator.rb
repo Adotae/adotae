@@ -2,7 +2,6 @@
 
 module AdoptionManager
   class DonationCreator < BaseService
-    
     def initialize(giver, pet_id)
       @giver = giver
       @pet = giver.pets.find(pet_id)
@@ -20,15 +19,13 @@ module AdoptionManager
       @adoption = Adoption.new(
         pet_id: @pet.id,
         giver_id: @giver.id,
-        status: 'incomplete'
+        status: "incomplete"
       )
 
       Adoption.transaction do
         @adoption.save!
         @pet.update!(can_be_adopted: true)
       end
-
-      raise DonationErrors::CantCreateDonationError unless @adoption.persisted?
 
       @adoption
     end

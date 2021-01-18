@@ -2,7 +2,6 @@
 
 module AdoptionManager
   class AdoptionCreator < BaseService
-
     def initialize(adopter, pet_id)
       @adopter = adopter
       @pet = Pet.find(pet_id)
@@ -24,9 +23,6 @@ module AdoptionManager
         @adoption.update!(adopter_id: @adopter.id)
         @pet.update!(can_be_adopted: false)
       end
-
-      # TODO: raise error if cannot update
-      # raise AdoptionErrors::CantCreateAdoptionError unless @adoption.persisted?
 
       @adoption
     end

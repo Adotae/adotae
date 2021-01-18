@@ -174,7 +174,7 @@ RSpec.describe "Pets", type: :request do
         id: pet.id,
         size: pet.size,
         can_be_adopted: pet.can_be_adopted,
-        photos: pet.get_photos_urls
+        photos: pet.photos_urls
       })
       validate_pet_response(JSON.parse(params.to_json), pet)
       expect(response).to have_http_status(:ok)
@@ -342,6 +342,6 @@ RSpec.describe "Pets", type: :request do
     expect(data["description"]).to      eq(pet.description)
     expect(data["can_be_adopted"]).to   eq(pet.can_be_adopted)
     expect(data["photos"].size).to      eq(pet.photos.size)
-    expect(data["photos"]).to           match_array(pet.get_photos_urls)
+    expect(data["photos"]).to           match_array(pet.photos_urls)
   end
 end

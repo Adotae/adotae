@@ -5,7 +5,7 @@ class ApplicationPolicy
 
   class Scope
     attr_reader :user, :scope
-    
+
     def initialize(user, scope)
       @user  = user
       @scope = scope
@@ -16,7 +16,7 @@ class ApplicationPolicy
     def user?
       @user.is_a?(User)
     end
-  
+
     def admin_user?
       @user.is_a?(AdminUser)
     end
@@ -24,11 +24,11 @@ class ApplicationPolicy
     def admin_role?
       admin_user? && @user.admin?
     end
-  
+
     def moderator_role?
       admin_user? && @user.moderator?
     end
-  
+
     def manager_role?
       admin_user? && @user.manager?
     end

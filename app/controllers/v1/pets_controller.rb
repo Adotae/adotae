@@ -2,12 +2,12 @@
 
 module V1
   class PetsController < ApplicationController
-    before_action :authorize_user, only: [:index, :create]
-    before_action :map_pet_photos, only: [:create, :update]
-    before_action :set_pet, only: [:show, :update, :destroy]
+    before_action :authorize_user, only: %i[index create]
+    before_action :map_pet_photos, only: %i[create update]
+    before_action :set_pet, only: %i[show update destroy]
 
-    before_action -> { select_user(need_user: false) }, only: [:index]
-    before_action -> { select_user(need_user: true) },  only: [:create, :favorites]
+    before_action -> { select_user(need_user: false) }, only: %i[index]
+    before_action -> { select_user(need_user: true) },  only: %i[create favorites]
 
     def index
       render_success(data: @user.pets) if @user
@@ -20,10 +20,10 @@ module V1
     end
 
     def create
-      @pet = Pet.new(pet_params).tap{ |pet|
+      @pet = Pet.new(pet_params).tap do |pet|
         pet.user = @user
         pet.save!
-      }
+      end
       render_success(data: @pet)
     end
 
@@ -41,8 +41,8 @@ module V1
     end
 
     def around
-      # GET /pets/around -> retorna os pets para adoção nos arredores do usuário logado
-      # GET /pets/around/1 -> retorna os pets para adoção nos arredores do usuário de id 1 [admin]
+      # GET /pets/around -> retorna os pets para adocao nos arredores do usuario logado
+      # GET /pets/around/1 -> retorna os pets para adocao nos arredores do usuario de id 1 [admin]
     end
 
     def favorites
@@ -64,14 +64,12 @@ module V1
         :dewormed,
         :vaccinated,
         :description,
-        :photos => []
+        photos: []
       )
     end
 
     def map_pet_photos
-      if params[:photos].present?
-        params[:photos] = params[:photos].values
-      end
+      params[:photos] && params[:photos] = params[:photos].values
     end
 
     def set_pet

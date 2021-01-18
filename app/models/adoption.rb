@@ -6,12 +6,12 @@ class Adoption < ApplicationRecord
   # Validations
   validates :status, presence: true
   validate  :status_is_defined?, on: :update
-  
+
   validates :completed_at, absence: true, on: :create
 
   # Relations
-  belongs_to :giver, class_name: "User", foreign_key: "giver_id"
-  belongs_to :adopter, class_name: "User", foreign_key: "adopter_id", optional: true
+  belongs_to :giver, class_name: "User", inverse_of: :donations
+  belongs_to :adopter, class_name: "User", inverse_of: :adoptions, optional: true
   belongs_to :associate, optional: true
   belongs_to :pet
 

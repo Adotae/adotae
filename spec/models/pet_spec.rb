@@ -383,8 +383,8 @@ RSpec.describe Pet, type: :model do
     end
 
     it "returns photos urls" do
-      expect(pet.get_photos_urls.size).to eq(pet.photos.size)
-      expect(pet.get_photos_urls[0]).to eq(url_for(pet.photos[0]))
+      expect(pet.photos_urls.size).to eq(pet.photos.size)
+      expect(pet.photos_urls[0]).to eq(url_for(pet.photos[0]))
     end
   end
 

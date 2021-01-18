@@ -180,9 +180,7 @@ pt-BR:
       adoption:
         not_found: "Adoção não encontrada"
         not_destroyed: "Erro ao excluir adoção"
-        cant_create: "Não foi possível criar a adoção"
         owner_cant_be_adopter: "Não foi possível criar a adoção"
       donation:
         not_found: "Doação não encontrada"
         not_destroyed: "Erro ao excluir doação"
-        cant_create: "Não foi possível criar a doação"

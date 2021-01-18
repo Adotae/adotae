@@ -35,7 +35,7 @@ class Pet < ApplicationRecord
             numericality: {
               only_integer: true,
               greater_than: 0,
-              less_than_or_equal_to: 500000
+              less_than_or_equal_to: 500_000
             }
 
   validates :neutered, inclusion: { in: [true, false] }
@@ -61,14 +61,14 @@ class Pet < ApplicationRecord
 
   def size
     # TODO: Calculate pet size based on height and weight
-    'small'
+    "small"
   end
 
   def in_adoption?
-    adoptions.where(status: 'incomplete').any?
+    adoptions.where(status: "incomplete").any?
   end
 
-  def get_photos_urls
+  def photos_urls
     photos.map do |photo|
       url_for(photo)
     end

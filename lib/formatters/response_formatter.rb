@@ -30,24 +30,26 @@ module Formatters
 
     private
 
-    def is_a_model?(data)
+    def a_model?(data)
       data.is_a?(ApplicationRecord)
     end
 
-    def is_a_enumerable?(data)
+    def a_enumerable?(data)
       data.is_a?(Array) || data.is_a?(Enumerable)
     end
-    
+
     def get_model_class(data)
-      if is_a_enumerable?(data) && data.present? && is_a_model?(data[0])
+      if a_enumerable?(data) && data.present? && a_model?(data[0])
         data[0].class
-      elsif is_a_model?(data)
+      elsif a_model?(data)
         data.class
       end
     end
 
     def get_blueprint(model_class)
-      "#{model_class.name}Blueprint".constantize rescue nil
+      "#{model_class.name}Blueprint".constantize
+    rescue NameError
+      nil
     end
   end
 end
