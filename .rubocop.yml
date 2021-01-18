@@ -2,6 +2,7 @@ require:
   - rubocop-rails
 
 AllCops:
+  TargetRubyVersion: 3.0
   NewCops: enable
   SuggestExtensions: false
   Exclude:
@@ -15,6 +16,9 @@ Metrics/MethodLength:
 
 Layout/LineLength:
   Max: 118
+
+Layout/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: true
 
 Layout/SpaceInLambdaLiteral:
   EnforcedStyle: require_space
