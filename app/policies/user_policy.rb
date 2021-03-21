@@ -24,4 +24,8 @@ class UserPolicy < ApplicationPolicy
   def destroy?
     admin_role?
   end
+
+  def profile?
+    user?
+  end
 end

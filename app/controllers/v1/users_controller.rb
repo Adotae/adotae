@@ -35,6 +35,18 @@ module V1
       render_success(data: @user)
     end
 
+    def profile
+      data = {
+        name: @current_user.name,
+        about: "Amiga dos animais",
+        location: "São Bernardo do Campo, São Paulo",
+        photo: "",
+        adoption_count: 1,
+        donation_count: 2
+      }
+      render_success(data: data)
+    end
+
     private
 
     def user_params
