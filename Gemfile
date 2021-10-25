@@ -42,7 +42,7 @@ gem "cpf_cnpj"
 gem "sentry-ruby"
 gem "sentry-rails"
 
-gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
+gem "mimemagic", github: "mimemagicrb/mimemagic", ref: "01f92d86d15d85cfd0f20dabd025dcbd36a8a60f"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
