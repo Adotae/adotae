@@ -109,9 +109,24 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
+  Quality:
+    needs: Test
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - uses: sonarsource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-    needs: Test
+    needs: Quality
     runs-on: ubuntu-20.04
 
     steps:
