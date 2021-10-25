@@ -110,34 +110,20 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
   Quality:
-    needs: Test
-    runs-on: ubuntu-20.04
-
-    steps:
-      - uses: actions/checkout@master
-
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.base_ref }}
-
-      - uses: sonarsource/sonarqube-scan-action@master
+- uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.pullrequest.key=26
-            -Dsonar.pullrequest.branch=${{ github.head_ref }}
-            -Dsonar.pullrequest.base=${{ github.base_ref }}
-
-      - uses: sonarsource/sonarqube-quality-gate-action@master
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Deploy:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-    needs: Quality
+    needs: Test
     runs-on: ubuntu-20.04
 
     steps:
