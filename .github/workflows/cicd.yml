@@ -122,9 +122,9 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.pullrequest.key=$GITHUB_SHA
-            -Dsonar.pullrequest.branch=$GITHUB_HEAD_REF
-            -Dsonar.pullrequest.base=$GITHUB_BASE_REF
+            -Dsonar.pullrequest.key=${{ github.sha }}
+            -Dsonar.pullrequest.branch=${{ github.head_ref }}
+            -Dsonar.pullrequest.base=${{ github.base_ref }}
 
       - uses: sonarsource/sonarqube-quality-gate-action@master
         timeout-minutes: 5
